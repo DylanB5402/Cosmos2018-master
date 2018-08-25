@@ -26,8 +26,8 @@ public class OI {
 		leftStick = new Joystick(0);
 		rightStick = new Joystick(1);
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncoders());
-		SmartDashboard.putData("Drive Characterization Test", new DriveCharacterizationTest(0.25));
-		SmartDashboard.putData("Velocity Test", new VelocityTest(3500, 5));
+		SmartDashboard.putData("Drive Characterization Test", new DriveCharacterizationTest(0.5));
+		SmartDashboard.putData("Velocity Test", new VelocityTest(7000, 6));
 	}
 	
 	public double getLeftY() {

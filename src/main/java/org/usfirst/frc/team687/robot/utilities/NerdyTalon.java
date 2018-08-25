@@ -20,8 +20,8 @@ public class NerdyTalon extends TalonSRX {
 		super.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
 		super.configPeakOutputForward(1, 0);
 		super.configPeakOutputReverse(-1, 0);
-		super.configClosedloopRamp(0.5, 0);
-		super.configOpenloopRamp(0.5, 0);	
+		// super.configClosedloopRamp(0.5, 0);
+		// super.configOpenloopRamp(0.5, 0);	
 	}
 	
 	public void configPIDF(double p, double i, double d, double f, int slot) {

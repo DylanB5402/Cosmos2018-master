@@ -50,15 +50,16 @@ public class DriveConstants {
 	public static double kLeftAdjustment = 1;
 	public static double kRightAdjustment = 1;
 
-	public static double kLeftStatic = 1.39;
-	public static double kLeftV = 0.0003324;
-	public static double kLeftVelocityP = 0.00125;
-	public static double kLeftVelocityD = 0;
+	public static double kLeftStatic = 1.479;
+	public static double kLeftV = 0.000271895;
+	public static double kLeftVelocityP = 0.00069;
+	public static double kLeftVelocityD = 0.00015;
+	
 
-	public static double kRightStatic = 1.428;
-	public static double kRightV = 0.0003171;
-	public static double kRightVelocityP = 0.00125;
-	public static double kRightVelocityD = 0;
+	public static double kRightStatic = 1.495;
+	public static double kRightV = 0.000271895;
+	public static double kRightVelocityP = 0.00069;
+	public static double kRightVelocityD = 0.00015;
 	
 	
 }

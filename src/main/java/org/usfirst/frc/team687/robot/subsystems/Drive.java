@@ -36,12 +36,13 @@ public class Drive extends Subsystem {
     
     private String m_filePath1 = "/media/sda1/logs/";
 	private String m_filePath2 = "/home/lvuser/logs/";
-	private String m_fileName = "2018_08_17_VelocityTest";
+	private String m_fileName = "2018_08_24_VelocityTest";
     private File m_file;
     public FileWriter m_writer;
     private boolean writeException = false;
 	private double m_logStartTime = 0;
 	private double m_leftDesiredVel, m_rightDesiredVel;
+
     
 	public Drive() {
 		
@@ -89,6 +90,13 @@ public class Drive extends Subsystem {
 		m_rightSlave1.setNeutralMode(NeutralMode.Brake);
 		m_rightSlave2.setNeutralMode(NeutralMode.Brake);
 		
+		m_rightMaster.configDefaultSettings();
+		m_rightSlave1.configDefaultSettings();
+		m_rightSlave2.configDefaultSettings();
+
+		m_leftMaster.configDefaultSettings();
+		m_leftSlave1.configDefaultSettings();
+		m_leftSlave2.configDefaultSettings();
 		
 	}
 	
