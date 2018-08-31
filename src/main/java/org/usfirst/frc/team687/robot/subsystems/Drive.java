@@ -16,7 +16,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
+import org.usfirst.frc.team687.robot.commands.drive.characterization.VelocityPIDF;
 
+import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -42,7 +44,8 @@ public class Drive extends Subsystem {
     private boolean writeException = false;
 	private double m_logStartTime = 0;
 	private double m_leftDesiredVel, m_rightDesiredVel;
-
+	private VelocityPIDF m_velocityPIDF;
+	private Notifier m_velocityNotifier;
     
 	public Drive() {
 		
@@ -225,6 +228,19 @@ public class Drive extends Subsystem {
 		return m_leftMaster.feetToTicks(feet);
 	}
 
+	public void startVelocityController() {
+		m_velocityNotifier.startPeriodic(DriveConstants.kVelocityPIDPeriod);
+	}
+
+	public void setTargetVelocities(double left, double right) {
+		m_velocityPIDF.setVelocity(left, right);
+	}
+
+	public void stopVelocityPIDF() {
+		m_velocityNotifier.stop();
+		m_velocityPIDF.stop();
+	}
+
     public void reportToSmartDashboard() {
     	SmartDashboard.putNumber("Left Master Voltage", getLeftOutputVoltage());
     	SmartDashboard.putNumber("Right Master Voltage", getRightOutputVoltage());
@@ -294,7 +310,7 @@ public class Drive extends Subsystem {
 			try {
 				double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
 				m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(getRightMasterPosition()) + ","
-						+ String.valueOf(m_rightMaster.getLinearVelocity()) + "," + String.valueOf(m_leftMaster.getLinearVelocity()) + ","
+						+ String.valueOf(getLeftMasterPosition()) + "," + String.valueOf(getRightMasterSpeed()) + ","
 						+ String.valueOf(getLeftMasterSpeed()) + "," + String.valueOf(m_rightDesiredVel) + "," + String.valueOf(m_leftDesiredVel)
 						+ "," + String.valueOf(m_rightMaster.getMotorOutputVoltage())
 						+ "," + String.valueOf(m_leftMaster.getMotorOutputVoltage()) + ","

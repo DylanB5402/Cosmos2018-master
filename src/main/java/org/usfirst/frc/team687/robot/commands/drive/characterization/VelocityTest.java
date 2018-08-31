@@ -32,8 +32,9 @@ public class VelocityTest extends Command {
     // m_prevTime = Timer.getFPGATimestamp();
     // m_leftPrevError = m_desiredVel - Robot.drive.getLeftMasterSpeed();
     // m_rightPrevError = m_desiredVel - Robot.drive.getRightMasterSpeed();
-    m_desiredVel = Robot.drive.feetToTicks(m_desiredVel);
-    Robot.velocityPIDF.setVelocity(m_desiredVel);
+    // m_desiredVel = Robot.drive.feetToTicks(m_desiredVel);
+    Robot.drive.startVelocityController();
+    Robot.drive.setTargetVelocities(m_desiredVel, m_desiredVel);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -66,7 +67,7 @@ public class VelocityTest extends Command {
   @Override
   protected void end() {
     Robot.drive.setPowerZero();
-    Robot.velocityPIDF.stop();
+    Robot.drive.stopVelocityPIDF();
   }
 
   // Called when another command which requires one or more of the same
