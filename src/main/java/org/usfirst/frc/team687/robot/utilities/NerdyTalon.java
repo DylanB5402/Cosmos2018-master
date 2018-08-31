@@ -10,9 +10,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class NerdyTalon extends TalonSRX {
 
+	private double m_ticksPerFoot, m_ticksPerDegree;
+
 	public NerdyTalon(int talonID) {
 		super(talonID);
 	}
+	
 	
 	public void configDefaultSettings() {
 		configVoltageCompensation(12);
@@ -20,8 +23,8 @@ public class NerdyTalon extends TalonSRX {
 		super.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
 		super.configPeakOutputForward(1, 0);
 		super.configPeakOutputReverse(-1, 0);
-		// super.configClosedloopRamp(0.5, 0);
-		// super.configOpenloopRamp(0.5, 0);	
+		super.configClosedloopRamp(0, 0);
+		super.configOpenloopRamp(0, 0);	
 	}
 	
 	public void configPIDF(double p, double i, double d, double f, int slot) {
@@ -36,7 +39,7 @@ public class NerdyTalon extends TalonSRX {
 		super.enableVoltageCompensation(true);
 	}
 	
-	public void configCurrentLimit(int current) {
+	public void configPeakCurrentLimit(int current) {
 		super.configPeakCurrentLimit(current, 0);
 		super.enableCurrentLimit(true);
 	}
@@ -46,6 +49,39 @@ public class NerdyTalon extends TalonSRX {
 		super.configMotionCruiseVelocity(cruise_vel, 0);
 	}
 	
+	/** 
+	 *@param ticksPerFoot
+	convert Talon Native Units to feet
+	 */
+	 
+	public void configLinearUnits(double ticksPerFoot) {
+		m_ticksPerFoot = ticksPerFoot;
+	}
 	
+	public void configAngularUnits(double ticksPerDegree) {
+		m_ticksPerDegree = ticksPerDegree;
+	}
+
+	public double getLinearVelocity() {
+		return (super.getSelectedSensorVelocity(0) / 0.1) / m_ticksPerFoot;
+	}
+
+	public double getAngularVelocity() {
+		return (super.getSelectedSensorVelocity(0) / 0.1) / m_ticksPerDegree;
+	}
+
+	public double ticksToFeet(double ticks) {
+		return ticks / m_ticksPerFoot;
+	}
 	
+	public double feetToTicks(double feet) {
+		return feet * m_ticksPerFoot;
+	}
+	// public double getEncoderAngle() {
+	// 	return 
+	// }
+
+	public double getEncoderPosition() {
+		return super.getSelectedSensorPosition(0) / m_ticksPerFoot;
+	}
 }

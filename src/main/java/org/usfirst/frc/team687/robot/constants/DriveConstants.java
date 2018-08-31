@@ -33,33 +33,35 @@ public class DriveConstants {
 	public static final double kDriveTolerance = 200;
 	
 //	Physical Robot Constants
-	public static double kWheelDiameter = 6;
-	public static double kDrivetrainWidth = 25;
+	public static final double kWheelDiameter = 6;
+	public static final double kDrivetrainWidth = 25;
 	
 //	Other Constants 
-	public static double kJoystickDeadband = 0.1;
+	public static final double kJoystickDeadband = 0.1;
 	
-	public static double kMinDistToBezierPoint = 100; //distance to target point at bezier curve where robot changes target to nect point
+	public static final double kMinDistToBezierPoint = 100; //distance to target point at bezier curve where robot changes target to nect point
 //	public static BezierCurve kTestCurveStraight = new BezierCurve()
-	public static double kMaximumTurnRadius = 50;
+	public static final double kMaximumTurnRadius = 50;
 	
-	public static double kRotD = 0;
-	public static double kRotMinPower = 0;
-	public static double kRotPMaxPower = 1;
+	public static final double kRotD = 0;
+	public static final double kRotMinPower = 0;
+	public static final double kRotPMaxPower = 1;
 	
-	public static double kLeftAdjustment = 1;
-	public static double kRightAdjustment = 1;
+	public static final double kLeftAdjustment = 1;
+	public static final double kRightAdjustment = 1;
 
-	public static double kLeftStatic = 1.479;
-	public static double kLeftV = 0.000271895;
-	public static double kLeftVelocityP = 0.00069;
-	public static double kLeftVelocityD = 0.00015;
+	public static final double kLeftStatic = 1.479;
+	public static final double kLeftV = 0.000271895;
+	public static final double kLeftVelocityP = 0.00069;
+	public static final double kLeftVelocityD = 0.00015;
 	
 
-	public static double kRightStatic = 1.495;
-	public static double kRightV = 0.000271895;
-	public static double kRightVelocityP = 0.00069;
-	public static double kRightVelocityD = 0.00015;
+	public static final double kRightStatic = 1.495;
+	public static final double kRightV = 0.000271895;
+	public static final double kRightVelocityP = 0.00069;
+	public static final double kRightVelocityD = 0.00015;
 	
-	
+	public static final double kTicksPerFoot = 16800;
+
+	public static final double kVelocityPIDPeriod = 0.02;
 }

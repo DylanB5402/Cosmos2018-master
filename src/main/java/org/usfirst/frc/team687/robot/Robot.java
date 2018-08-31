@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team687.robot;
 
+import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -14,6 +15,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team687.robot.commands.drive.characterization.VelocityPIDF;
+import org.usfirst.frc.team687.robot.constants.DriveConstants;
 import org.usfirst.frc.team687.robot.subsystems.Arm;
 import org.usfirst.frc.team687.robot.subsystems.Claw;
 import org.usfirst.frc.team687.robot.subsystems.Drive;
@@ -31,6 +34,8 @@ public class Robot extends TimedRobot {
 	public static Arm arm;
 	public static Claw claw;
 	public static OI oi;
+	public static VelocityPIDF velocityPIDF;
+	public static Notifier velocityNotifier;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -43,8 +48,8 @@ public class Robot extends TimedRobot {
 		drive = new Drive();
 		claw = new Claw();
 		oi = new OI();
-		
-		
+		velocityPIDF = new VelocityPIDF();
+		velocityNotifier = new Notifier(velocityPIDF);
 	}
 
 	/**
@@ -59,8 +64,8 @@ public class Robot extends TimedRobot {
 		Robot.oi.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 		Robot.drive.stopLog();
-
-
+		velocityPIDF.stop();
+		velocityNotifier.stop();
 	}
 
 	@Override
@@ -70,13 +75,15 @@ public class Robot extends TimedRobot {
 		Robot.drive.reportToSmartDashboard();
 		Robot.oi.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
-
+		velocityPIDF.stop();
+		velocityNotifier.stop();
 	}
 
 	
 	@Override
 	public void autonomousInit() {
 		Robot.drive.calcXY();	
+		velocityNotifier.startPeriodic(DriveConstants.kVelocityPIDPeriod);
 	}
 
 	/**
@@ -95,8 +102,7 @@ public class Robot extends TimedRobot {
 		Robot.drive.calcXY();
 		SmartDashboard.putData(pdp);
 		Robot.drive.startLog();
-		
-		
+		velocityNotifier.startPeriodic(DriveConstants.kVelocityPIDPeriod);	
 	}
 
 	/**

@@ -97,7 +97,9 @@ public class Drive extends Subsystem {
 		m_leftMaster.configDefaultSettings();
 		m_leftSlave1.configDefaultSettings();
 		m_leftSlave2.configDefaultSettings();
-		
+
+		m_leftMaster.configLinearUnits(DriveConstants.kTicksPerFoot);
+		m_leftMaster.configLinearUnits(DriveConstants.kTicksPerFoot);		
 	}
 	
 	public void setPower(double leftPower, double rightPower) {
@@ -214,7 +216,15 @@ public class Drive extends Subsystem {
     public double getYpos() {
     	return m_currentY;
     }
-     
+	
+	public double ticksToFeet(double ticks) {
+		return m_leftMaster.ticksToFeet(ticks);
+	}
+	
+	public double feetToTicks(double feet) {
+		return m_leftMaster.feetToTicks(feet);
+	}
+
     public void reportToSmartDashboard() {
     	SmartDashboard.putNumber("Left Master Voltage", getLeftOutputVoltage());
     	SmartDashboard.putNumber("Right Master Voltage", getRightOutputVoltage());
@@ -284,7 +294,7 @@ public class Drive extends Subsystem {
 			try {
 				double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
 				m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(getRightMasterPosition()) + ","
-						+ String.valueOf(getLeftMasterPosition()) + "," + String.valueOf(getRightMasterSpeed()) + ","
+						+ String.valueOf(m_rightMaster.getLinearVelocity()) + "," + String.valueOf(m_leftMaster.getLinearVelocity()) + ","
 						+ String.valueOf(getLeftMasterSpeed()) + "," + String.valueOf(m_rightDesiredVel) + "," + String.valueOf(m_leftDesiredVel)
 						+ "," + String.valueOf(m_rightMaster.getMotorOutputVoltage())
 						+ "," + String.valueOf(m_leftMaster.getMotorOutputVoltage()) + ","
