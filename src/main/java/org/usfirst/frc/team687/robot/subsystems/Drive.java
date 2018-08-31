@@ -33,8 +33,7 @@ public class Drive extends Subsystem {
 	private final NerdyTalon m_rightMaster, m_rightSlave1, m_rightSlave2;
 	private final AHRS m_nav;
 	
-	private double m_previousDistance;
-    private double m_currentX, m_currentY;
+	private double m_previousDistance, m_currentX, m_currentY;
     
     private String m_filePath1 = "/media/sda1/logs/";
 	private String m_filePath2 = "/home/lvuser/logs/";
@@ -102,7 +101,10 @@ public class Drive extends Subsystem {
 		m_leftSlave2.configDefaultSettings();
 
 		m_leftMaster.configLinearUnits(DriveConstants.kTicksPerFoot);
-		m_leftMaster.configLinearUnits(DriveConstants.kTicksPerFoot);		
+		m_leftMaster.configLinearUnits(DriveConstants.kTicksPerFoot);
+		
+		m_velocityPIDF = new VelocityPIDF();
+		m_velocityNotifier = new Notifier(m_velocityPIDF);
 	}
 	
 	public void setPower(double leftPower, double rightPower) {

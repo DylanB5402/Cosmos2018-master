@@ -4,7 +4,6 @@ import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.constants.DriveConstants;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VelocityPIDF implements Runnable {
@@ -12,7 +11,11 @@ public class VelocityPIDF implements Runnable {
     private double m_leftDesiredVel, m_rightDesiredVel, m_time, m_prevTime, m_startTime;
     private double m_leftError, m_rightError, m_leftPrevError, m_rightPrevError;
     private double m_leftVoltage, m_rightVoltage;
-    private boolean m_started = false;
+    private boolean m_started;
+
+    public VelocityPIDF() {
+        m_started = false;
+    }
 
     public void setVelocity(double leftVel, double rightVel) {
         m_leftDesiredVel = leftVel;
@@ -21,6 +24,7 @@ public class VelocityPIDF implements Runnable {
 
     @Override
     public void run() {
+        // basically the initialize function in a command
         if (!m_started) {
             m_startTime = Timer.getFPGATimestamp();
             m_prevTime = Timer.getFPGATimestamp();
@@ -29,6 +33,7 @@ public class VelocityPIDF implements Runnable {
             m_started = true;
         }
 
+        // execute function
         m_time = Timer.getFPGATimestamp() - m_startTime;
         m_leftError = m_leftDesiredVel - Robot.drive.getLeftMasterSpeed();
         m_rightError = m_rightDesiredVel - Robot.drive.getRightMasterSpeed();
@@ -44,12 +49,13 @@ public class VelocityPIDF implements Runnable {
         m_prevTime = m_time;
         m_leftPrevError = m_leftError;
         m_rightPrevError = m_rightError;
-        SmartDashboard.putString("VelocityPID", "Runnable is working");
+        SmartDashboard.putNumber("VelocityPID", m_leftDesiredVel);
     }
 
     public void stop() {
         m_rightDesiredVel = 0;
         m_leftDesiredVel = 0;
+        m_started = false;
     }
 
 }
