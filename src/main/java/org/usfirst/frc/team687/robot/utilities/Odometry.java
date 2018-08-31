@@ -28,4 +28,12 @@ public class Odometry implements Runnable {
         m_currentX = 0;
         m_currentY = 0;
     }
+
+    public double getCurrentX() {
+        return m_currentX;
+    }
+
+    public double getCurrentY() {
+        return m_currentY;
+    }
 }
