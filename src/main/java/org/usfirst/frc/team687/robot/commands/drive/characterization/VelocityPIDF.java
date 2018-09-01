@@ -44,8 +44,8 @@ public class VelocityPIDF implements Runnable {
         m_rightVoltage = DriveConstants.kRightStatic * Math.signum(m_rightDesiredVel) + DriveConstants.kRightV * m_rightDesiredVel 
         + m_rightError * DriveConstants.kRightVelocityP + DriveConstants.kRightVelocityD
         * (m_rightError - m_rightPrevError)/(m_time - m_prevTime);
-        // Robot.drive.setVoltage(m_leftVoltage, m_rightVoltage);
-        // Robot.drive.addDesiredVelocities(m_desiredVel, m_desiredVel);
+        Robot.drive.setVoltage(m_leftVoltage, m_rightVoltage);
+        Robot.drive.addDesiredVelocities(m_leftDesiredVel, m_rightDesiredVel);
         m_prevTime = m_time;
         m_leftPrevError = m_leftError;
         m_rightPrevError = m_rightError;

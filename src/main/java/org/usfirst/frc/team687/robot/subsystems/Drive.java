@@ -10,6 +10,7 @@ import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.RobotMap;
 import org.usfirst.frc.team687.robot.commands.drive.teleop.ArcadeDrive;
 import org.usfirst.frc.team687.robot.commands.drive.teleop.TankDrive;
+import org.usfirst.frc.team687.robot.commands.drive.teleop.ClosedLoopTankDrive;
 import org.usfirst.frc.team687.robot.constants.DriveConstants;
 import org.usfirst.frc.team687.robot.utilities.NerdyTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -37,7 +38,7 @@ public class Drive extends Subsystem {
     
     private String m_filePath1 = "/media/sda1/logs/";
 	private String m_filePath2 = "/home/lvuser/logs/";
-	private String m_fileName = "2018_08_24_VelocityTest";
+	private String m_fileName = "2018_08_31_VelocityTest";
     private File m_file;
     public FileWriter m_writer;
     private boolean writeException = false;
@@ -196,7 +197,7 @@ public class Drive extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
-        setDefaultCommand(new ArcadeDrive());
+        setDefaultCommand(new ClosedLoopTankDrive());
     }   
     
 	public void resetXY() {
@@ -239,8 +240,8 @@ public class Drive extends Subsystem {
 	}
 
 	public void stopVelocityPIDF() {
-		m_velocityNotifier.stop();
 		m_velocityPIDF.stop();
+		m_velocityNotifier.stop();
 	}
 
     public void reportToSmartDashboard() {
@@ -253,7 +254,6 @@ public class Drive extends Subsystem {
     	SmartDashboard.putNumber("Yaw", getRawYaw());
     	SmartDashboard.putNumber("X pos", m_currentX);
     	SmartDashboard.putNumber("Y pos", m_currentY);
-    	
     	
     }
     

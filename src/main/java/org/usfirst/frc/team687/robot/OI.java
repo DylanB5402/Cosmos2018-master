@@ -31,7 +31,7 @@ public class OI {
 	}
 	
 	public double getLeftY() {
-		return leftStick.getY();
+		return -leftStick.getY();
 	}
 	
 	public double getLeftX() {
@@ -39,7 +39,7 @@ public class OI {
 	}
 	
 	public double getRightY() {
-		return rightStick.getY();
+		return -rightStick.getY();
 	}
 	
 	public double getRightX() {

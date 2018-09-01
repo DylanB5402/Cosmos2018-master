@@ -51,17 +51,18 @@ public class DriveConstants {
 	public static final double kRightAdjustment = 1;
 
 	public static final double kLeftStatic = 1.479;
-	public static final double kLeftV = 0.000271895;
-	public static final double kLeftVelocityP = 0.00069;
+	public static final double kLeftV = 0.000251895;
+	public static final double kLeftVelocityP = 0.0004;
 	public static final double kLeftVelocityD = 0.00015;
-	
+
 
 	public static final double kRightStatic = 1.495;
-	public static final double kRightV = 0.000271895;
-	public static final double kRightVelocityP = 0.00069;
+	public static final double kRightV = 0.000251895;
+	public static final double kRightVelocityP = 0.0004;
 	public static final double kRightVelocityD = 0.00015;
+
 	
 	public static final double kTicksPerFoot = 16800;
 
-	public static final double kVelocityPIDPeriod = 0.02;
+	public static final double kVelocityPIDPeriod = 0.01;
 }
