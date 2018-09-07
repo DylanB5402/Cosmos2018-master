@@ -102,7 +102,7 @@ public class Drive extends Subsystem {
 		m_leftSlave2.configDefaultSettings();
 
 		m_leftMaster.configLinearUnits(DriveConstants.kTicksPerFoot);
-		m_leftMaster.configLinearUnits(DriveConstants.kTicksPerFoot);
+		m_rightMaster.configLinearUnits(DriveConstants.kTicksPerFoot);
 		
 		m_velocityPIDF = new VelocityPIDF();
 		m_velocityNotifier = new Notifier(m_velocityPIDF);
@@ -250,8 +250,10 @@ public class Drive extends Subsystem {
     	
     	SmartDashboard.putNumber("Left Master Position", getLeftMasterPosition());
     	SmartDashboard.putNumber("Right Master Position", getRightMasterPosition());
-    	
-    	SmartDashboard.putNumber("Yaw", getRawYaw());
+		
+		SmartDashboard.putNumber("Left Master Position Feet", m_leftMaster.getEncoderPositionFeet());
+		SmartDashboard.putNumber("Right Master Position Feet", m_rightMaster.getEncoderPositionFeet());		
+		SmartDashboard.putNumber("Yaw", getRawYaw());
     	SmartDashboard.putNumber("X pos", m_currentX);
     	SmartDashboard.putNumber("Y pos", m_currentY);
     	

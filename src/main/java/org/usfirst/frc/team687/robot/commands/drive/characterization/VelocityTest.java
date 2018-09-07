@@ -32,7 +32,7 @@ public class VelocityTest extends Command {
     m_prevTime = Timer.getFPGATimestamp();
     m_leftPrevError = m_desiredVel - Robot.drive.getLeftMasterSpeed();
     m_rightPrevError = m_desiredVel - Robot.drive.getRightMasterSpeed();
-    // m_desiredVel = Robot.drive.feetToTicks(m_desiredVel);
+    m_desiredVel = Robot.drive.feetToTicks(m_desiredVel) * 0.1;
 
     // Robot.drive.startVelocityController();
     // Robot.drive.setTargetVelocities(m_desiredVel, m_desiredVel);

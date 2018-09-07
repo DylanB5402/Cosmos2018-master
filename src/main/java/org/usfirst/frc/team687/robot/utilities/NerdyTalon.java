@@ -15,8 +15,7 @@ public class NerdyTalon extends TalonSRX {
 	public NerdyTalon(int talonID) {
 		super(talonID);
 	}
-	
-	
+
 	public void configDefaultSettings() {
 		configVoltageCompensation(12);
 		super.setStatusFramePeriod(StatusFrame.Status_1_General, 20, 0);
@@ -66,7 +65,7 @@ public class NerdyTalon extends TalonSRX {
 		return (super.getSelectedSensorVelocity(0) / 0.1) / m_ticksPerFoot;
 	}
 
-	public double getAngularVelocity() {
+	public double getAngularVelocityDegrees() {
 		return (super.getSelectedSensorVelocity(0) / 0.1) / m_ticksPerDegree;
 	}
 
@@ -77,11 +76,26 @@ public class NerdyTalon extends TalonSRX {
 	public double feetToTicks(double feet) {
 		return feet * m_ticksPerFoot;
 	}
-	// public double getEncoderAngle() {
-	// 	return 
-	// }
 
-	public double getEncoderPosition() {
+	public double getEncoderPositionFeet() {
 		return super.getSelectedSensorPosition(0) / m_ticksPerFoot;
 	}
+
+	public double degreesToTicks(double degrees) {
+		return degrees * m_ticksPerDegree;
+	}
+
+	public double ticksToDegrees(double ticks) {
+		return ticks / m_ticksPerDegree;
+	}
+
+	public double getEncoderAngleDegrees() {
+		return super.getSelectedSensorPosition(0) / m_ticksPerDegree;
+	}
+
+	public double getAngularVelocityRadians() {
+		return getAngularVelocityDegrees() * (Math.PI / 180);
+	}
+
+
 }
