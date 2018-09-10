@@ -19,6 +19,7 @@ import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.utilities.NerdyMath;
 import org.usfirst.frc.team687.robot.utilities.TrajectoryUtils;
 import org.usfirst.frc.team687.robot.constants.DriveConstants;
+
 public class DrivePurePursuit extends Command {
 
   private Trajectory m_trajectory;
@@ -30,7 +31,7 @@ public class DrivePurePursuit extends Command {
     m_innerVelocity, m_error, m_driveRadius;
   private double m_prevTime, m_leftDesiredVel, m_rightDesiredVel;
   private double m_leftError, m_rightError, m_leftPrevError, m_rightPrevError;
-  private double m_leftVoltage, m_rightVoltage, m_desiredTime;
+  private double m_leftVoltage, m_rightVoltage;
   private Segment m_currentSegment, m_segment2;
   private int m_index;
   private Boolean m_goingForwards;
@@ -151,10 +152,10 @@ public class DrivePurePursuit extends Command {
     m_leftError = m_leftDesiredVel - Robot.drive.getLeftMasterSpeed();
     m_rightError = m_rightDesiredVel - Robot.drive.getRightMasterSpeed();
 
-    m_leftVoltage = DriveConstants.kLeftStatic * Math.signum(m_leftDesiredVel) + DriveConstants.kLeftV * m_desiredVel 
+    m_leftVoltage = DriveConstants.kLeftStatic * Math.signum(m_leftDesiredVel) + DriveConstants.kLeftV * m_leftDesiredVel 
       + m_leftError * DriveConstants.kLeftVelocityP + DriveConstants.kLeftVelocityD
       * (m_leftError - m_leftPrevError)/(m_time - m_prevTime);
-    m_rightVoltage = DriveConstants.kRightStatic * Math.signum(m_rightDesiredVel) + DriveConstants.kRightV * m_desiredVel 
+    m_rightVoltage = DriveConstants.kRightStatic * Math.signum(m_rightDesiredVel) + DriveConstants.kRightV * m_rightDesiredVel 
     + m_rightError * DriveConstants.kRightVelocityP + DriveConstants.kRightVelocityD
     * (m_rightError - m_rightPrevError)/(m_time - m_prevTime);
     Robot.drive.setVoltage(m_leftVoltage, m_rightVoltage);

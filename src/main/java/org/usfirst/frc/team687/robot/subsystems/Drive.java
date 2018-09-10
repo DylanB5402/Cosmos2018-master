@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import jaci.pathfinder.Pathfinder;
 
 /**
  *
@@ -178,7 +179,12 @@ public class Drive extends Subsystem {
 	
 	
 	public double getRawYaw() {
-		return m_nav.getYaw();
+		if (Robot.oi.getStartingDirection() == "Forwards") {
+			return Pathfinder.boundHalfDegrees(m_nav.getYaw());
+		}
+		else {
+			return Pathfinder.boundHalfDegrees(m_nav.getYaw() + 180);
+		}
 	}
 	
 	public void resetYaw() {
