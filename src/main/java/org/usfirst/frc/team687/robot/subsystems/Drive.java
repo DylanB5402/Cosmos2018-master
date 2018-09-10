@@ -34,7 +34,7 @@ public class Drive extends Subsystem {
 	private final NerdyTalon m_rightMaster, m_rightSlave1, m_rightSlave2;
 	private final AHRS m_nav;
 	
-	private double m_previousDistance, m_currentX, m_currentY;
+	private double m_previousDistance, m_currentX, m_currentY, m_angleOffset, m_xOffset, m_yOffset;
     
     private String m_filePath1 = "/media/sda1/logs/";
 	private String m_filePath2 = "/home/lvuser/logs/";

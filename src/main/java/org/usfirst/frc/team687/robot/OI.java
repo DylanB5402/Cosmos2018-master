@@ -11,6 +11,7 @@ import org.usfirst.frc.team687.robot.commands.drive.ResetDriveEncoders;
 import org.usfirst.frc.team687.robot.commands.drive.characterization.DriveCharacterizationTest;
 import org.usfirst.frc.team687.robot.commands.drive.characterization.VelocityTest;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -21,15 +22,26 @@ public class OI {
 	
 	public Joystick leftStick;
 	public Joystick rightStick;
-	
+	private SendableChooser directionChooser;
+
 	public OI() {
 		leftStick = new Joystick(0);
 		rightStick = new Joystick(1);
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncoders());
 		SmartDashboard.putData("Drive Characterization Test", new DriveCharacterizationTest(0.5));
 		SmartDashboard.putData("Velocity Test", new VelocityTest(7000, 6));
+
+		directionChooser = new SendableChooser<>();
+		directionChooser.addObject("Forward", "Forward");
+		directionChooser.addObject("Backwards", "Backwards");
+		SmartDashboard.putData("Direction Chooser", directionChooser);
+		SmartDashboard.putString("Direction", getStartingDirection());
 	}
 	
+	public String getStartingDirection() {
+		return (String) directionChooser.getSelected();
+	}
+
 	public double getLeftY() {
 		return -leftStick.getY();
 	}

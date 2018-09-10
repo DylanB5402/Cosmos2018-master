@@ -16,21 +16,29 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import org.usfirst.frc.team687.robot.Robot;
+import org.usfirst.frc.team687.robot.utilities.NerdyMath;
 import org.usfirst.frc.team687.robot.utilities.TrajectoryUtils;
-
+import org.usfirst.frc.team687.robot.constants.DriveConstants;
 public class DrivePurePursuit extends Command {
 
   private Trajectory m_trajectory;
   private double m_lookahead, m_x1, m_x2, m_y1, m_y2,
   m_a, m_b, m_c, m_goalX1, m_goalX2, m_goalY1, m_goalY2,
    m_startTime, m_time, m_robotX, m_robotY, m_slope, 
-   m_yInt, m_error1, m_error2, m_angle, m_targetAngle1, m_targetAngle2;
+   m_yInt, m_error1, m_error2, m_angle, m_targetAngle1,
+    m_targetAngle2, m_goalX, m_goalY, m_xOffset, m_velocity, 
+    m_innerVelocity, m_error, m_driveRadius;
+  private double m_prevTime, m_leftDesiredVel, m_rightDesiredVel;
+  private double m_leftError, m_rightError, m_leftPrevError, m_rightPrevError;
+  private double m_leftVoltage, m_rightVoltage, m_desiredTime;
   private Segment m_currentSegment, m_segment2;
   private int m_index;
+  private Boolean m_goingForwards;
   
-  public DrivePurePursuit(Trajectory trajectory, double lookahead) {
+  public DrivePurePursuit(Trajectory trajectory, double lookahead, Boolean goingForwards) {
     m_lookahead = lookahead;
     m_trajectory = trajectory;
+    m_goingForwards = goingForwards;
     requires(Robot.drive);
   }
 
@@ -80,7 +88,7 @@ public class DrivePurePursuit extends Command {
       m_error1 += 360;
     }
 
-    m_targetAngle1 = Math.toDegrees(Math.atan2(m_goalX1 - m_robotX, m_goalY1 - m_robotY));
+    m_targetAngle2 = Math.toDegrees(Math.atan2(m_goalX2 - m_robotX, m_goalY2 - m_robotY));
 
     m_error2 = m_targetAngle2 - m_angle;
     if (m_error2 >= 180) {
@@ -90,13 +98,77 @@ public class DrivePurePursuit extends Command {
       m_error2 += 360;
     }
 
+    if (Math.abs(m_error1) <= Math.abs(m_error2)) {
+      m_error = m_error1;
+      m_goalX = m_goalX1;
+      m_goalY = m_goalY1;
+    }
+    else {
+      m_error = m_error2;
+      m_goalX = m_goalX2;
+      m_goalY = m_goalY2;
+    }
+
+    m_xOffset = NerdyMath.distanceFormula(m_robotX, m_robotY, m_goalX, m_goalY) 
+    * Math.cos(Math.toRadians(m_error));
     
+    m_velocity = m_currentSegment.velocity;
+    
+    if (!m_goingForwards) {
+      m_velocity *= -1;
+    }
+    
+    if (m_xOffset > 0) {
+      m_driveRadius = (m_lookahead * m_lookahead) / (2 * m_xOffset);
+      m_innerVelocity = m_velocity * (m_driveRadius - (DriveConstants.kDrivetrainWidth/2)) / (m_driveRadius + (DriveConstants.kDrivetrainWidth/2));
+      if (m_goingForwards) {
+        if (Math.signum(m_error) == -1) {
+          m_leftDesiredVel = m_innerVelocity;
+          m_rightDesiredVel = m_velocity;
+        }
+        else {
+          m_leftDesiredVel = m_velocity;
+          m_rightDesiredVel = m_innerVelocity;
+        }
+      }
+      else {
+        if (Math.signum(m_error) == 1) {
+          m_leftDesiredVel = m_innerVelocity;
+          m_rightDesiredVel = m_velocity;
+        }
+        else {
+          m_leftDesiredVel = m_velocity;
+          m_rightDesiredVel = m_innerVelocity;
+        }
+      }
+    }
+    else {
+      m_leftDesiredVel = m_velocity;
+      m_rightDesiredVel = m_velocity;
+    }
+
+    // Replace with Talon Velocity Control down the line
+    m_leftError = m_leftDesiredVel - Robot.drive.getLeftMasterSpeed();
+    m_rightError = m_rightDesiredVel - Robot.drive.getRightMasterSpeed();
+
+    m_leftVoltage = DriveConstants.kLeftStatic * Math.signum(m_leftDesiredVel) + DriveConstants.kLeftV * m_desiredVel 
+      + m_leftError * DriveConstants.kLeftVelocityP + DriveConstants.kLeftVelocityD
+      * (m_leftError - m_leftPrevError)/(m_time - m_prevTime);
+    m_rightVoltage = DriveConstants.kRightStatic * Math.signum(m_rightDesiredVel) + DriveConstants.kRightV * m_desiredVel 
+    + m_rightError * DriveConstants.kRightVelocityP + DriveConstants.kRightVelocityD
+    * (m_rightError - m_rightPrevError)/(m_time - m_prevTime);
+    Robot.drive.setVoltage(m_leftVoltage, m_rightVoltage);
+    Robot.drive.addDesiredVelocities(m_leftDesiredVel, m_rightDesiredVel);
+    m_prevTime = m_time;
+    m_leftPrevError = m_leftError;
+    m_rightPrevError = m_rightError;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    // subtract 2, since arrays start at 0 and last segment has a velocity of 0
+    return m_index == (m_trajectory.length() - 2);
   }
 
   // Called once after isFinished returns true
