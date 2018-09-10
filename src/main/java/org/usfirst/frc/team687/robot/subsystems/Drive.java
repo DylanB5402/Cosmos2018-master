@@ -178,7 +178,12 @@ public class Drive extends Subsystem {
 	
 	
 	public double getRawYaw() {
-		return m_nav.getYaw();
+		if (Robot.oi.getStartingDirection() == "Forwards") {
+			return m_nav.getYaw();
+		}
+		else {
+			return m_nav.getYaw() + 180;
+		}
 	}
 	
 	public void resetYaw() {
