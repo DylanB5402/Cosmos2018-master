@@ -180,17 +180,10 @@ public class Drive extends Subsystem {
 	
 	public double getRawYaw() {
 		if (Robot.oi.getStartingDirection() == "Forwards") {
-<<<<<<< HEAD
 			return Pathfinder.boundHalfDegrees(m_nav.getYaw());
 		}
 		else {
 			return Pathfinder.boundHalfDegrees(m_nav.getYaw() + 180);
-=======
-			return m_nav.getYaw();
-		}
-		else {
-			return m_nav.getYaw() + 180;
->>>>>>> master
 		}
 	}
 	
