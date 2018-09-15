@@ -14,7 +14,11 @@ public class AutoConstants {
         new Waypoint(0, 0, Pathfinder.d2r(90)),
         new Waypoint(5, 7, Pathfinder.d2r(90))  
     };
+<<<<<<< HEAD
     public static Trajectory test = Pathfinder.generate(test_points, test_config);
+=======
+    private static Trajectory test = Pathfinder.generate(test_points, test_config);
+>>>>>>> master
     
 
     
