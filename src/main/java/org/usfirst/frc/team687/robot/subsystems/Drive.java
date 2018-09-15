@@ -237,6 +237,22 @@ public class Drive extends Subsystem {
 		return m_leftMaster.feetToTicks(feet);
 	}
 
+	public double getLeftVelocityFeet() {
+		return m_leftMaster.getLinearVelocity();
+	}
+
+	public double getRightVelocityFeet() {
+		return m_rightMaster.getLinearVelocity();
+	}
+
+	public double getLeftPositionFeet() {
+		return m_leftMaster.getEncoderPositionFeet();
+	}
+
+	public double getRightPositionFeet() {
+		return m_rightMaster.getEncoderPositionFeet();
+	}
+
 	public void startVelocityController() {
 		m_velocityNotifier.startPeriodic(DriveConstants.kVelocityPIDPeriod);
 	}

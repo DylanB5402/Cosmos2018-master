@@ -50,13 +50,26 @@ public class DriveConstants {
 	public static final double kLeftAdjustment = 1;
 	public static final double kRightAdjustment = 1;
 
-	public static final double kLeftStatic = 1.479;
+	//old gains for encoder ticks
+	// public static final double kLeftStatic = 1.479;
+	// public static final double kLeftV = 0.000251895;
+	// public static final double kLeftVelocityP = 0.0004;
+	// public static final double kLeftVelocityD = 0.00015;
+
+
+	// public static final double kRightStatic = 1.495;
+	// public static final double kRightV = 0.000251895;
+	// public static final double kRightVelocityP = 0.0004;
+	// public static final double kRightVelocityD = 0.00015;
+
+	// new gains for pf
+	public static final double kLeftStatic = 1.479/12;
 	public static final double kLeftV = 0.000251895;
 	public static final double kLeftVelocityP = 0.0004;
 	public static final double kLeftVelocityD = 0.00015;
 
 
-	public static final double kRightStatic = 1.495;
+	public static final double kRightStatic = 1.495/12;
 	public static final double kRightV = 0.000251895;
 	public static final double kRightVelocityP = 0.0004;
 	public static final double kRightVelocityD = 0.00015;

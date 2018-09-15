@@ -38,4 +38,6 @@ public class TrajectoryUtils {
             return seg2;
         }
     }
+
+    
 }
