@@ -21,7 +21,8 @@ import jaci.pathfinder.followers.DistanceFollower;
 public class DriveTrajectory extends Command {
   private Trajectory m_leftTrajectory, m_rightTrajectory, m_sourceTrajectory;
   private DistanceFollower m_leftFollower, m_rightFollower;
-  private double m_leftOutput, m_rightOutput, m_turn, m_angularError, m_angle, m_leftPosition, m_rightPosition, m_sign;
+  private double m_leftOutput, m_rightOutput, m_turn, m_angularError, m_angle,
+  m_leftPosition, m_rightPosition, m_sign,;
   private TankModifier m_modifier;
   private boolean m_forwards;
 
@@ -64,7 +65,6 @@ public class DriveTrajectory extends Command {
     if (!m_forwards) {
       m_leftPosition = -m_leftPosition;
       m_rightPosition = -m_rightPosition;
-      m_angle += 180;
     }
     m_leftOutput = m_sign * m_leftFollower.calculate(m_leftPosition) + DriveConstants.kLeftStatic;
     m_rightOutput = m_sign * m_rightFollower.calculate(m_rightPosition) + DriveConstants.kRightStatic;
@@ -73,6 +73,7 @@ public class DriveTrajectory extends Command {
     m_turn = DriveConstants.kRotP * m_angularError;
     Robot.drive.addDesiredVelocities(m_leftFollower.getSegment().velocity, m_rightFollower.getSegment().velocity);
     Robot.drive.setPower(m_leftOutput + m_turn, m_rightOutput - m_turn);
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

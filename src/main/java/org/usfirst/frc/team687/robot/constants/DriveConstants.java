@@ -73,6 +73,7 @@ public class DriveConstants {
 	public static final double kRightVelocityP = 0.01;
 	public static final double kRightVelocityD = 0.001;
 
+	// public static final double kRotP = 0;
 	public static final double kRotP = 0.008;
 	
 	public static final double kTicksPerFoot = 16800;
