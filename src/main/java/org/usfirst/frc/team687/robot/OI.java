@@ -8,8 +8,12 @@
 package org.usfirst.frc.team687.robot;
 
 import org.usfirst.frc.team687.robot.commands.drive.ResetDriveEncoders;
+import org.usfirst.frc.team687.robot.commands.drive.ResetGyro;
+import org.usfirst.frc.team687.robot.commands.drive.auto.DriveOpenLoop;
+import org.usfirst.frc.team687.robot.commands.drive.auto.DrivePurePursuit;
 import org.usfirst.frc.team687.robot.commands.drive.characterization.DriveCharacterizationTest;
 import org.usfirst.frc.team687.robot.commands.drive.characterization.VelocityTest;
+import org.usfirst.frc.team687.robot.constants.AutoConstants;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,6 +31,7 @@ public class OI {
 	public OI() {
 		leftStick = new Joystick(0);
 		rightStick = new Joystick(1);
+		SmartDashboard.putData("Reset Gyro", new ResetGyro());
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncoders());
 		SmartDashboard.putData("Drive Characterization Test", new DriveCharacterizationTest(0.5));
 		SmartDashboard.putData("Velocity Test", new VelocityTest(7000, 6));
@@ -35,7 +40,9 @@ public class OI {
 		directionChooser.addObject("Forward", "Forward");
 		directionChooser.addObject("Backwards", "Backwards");
 		SmartDashboard.putData("Direction Chooser", directionChooser);
-		SmartDashboard.putString("Direction", getStartingDirection());
+		SmartDashboard.putData("Open loop", new DriveOpenLoop());
+		SmartDashboard.putData("Pure pursuit Test", new DrivePurePursuit(AutoConstants.test, 1.5, true));
+		// SmartDashboard.putString("Direction", getStartingDirection());
 	}
 	
 	public String getStartingDirection() {

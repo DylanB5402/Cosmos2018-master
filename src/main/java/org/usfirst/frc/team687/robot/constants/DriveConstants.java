@@ -34,7 +34,7 @@ public class DriveConstants {
 	
 //	Physical Robot Constants
 	public static final double kWheelDiameter = 6;
-	public static final double kDrivetrainWidth = 25;
+	public static final double kDrivetrainWidth = 2.09766;
 	
 //	Other Constants 
 	public static final double kJoystickDeadband = 0.1;

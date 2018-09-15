@@ -183,7 +183,7 @@ public class Drive extends Subsystem {
 			return Pathfinder.boundHalfDegrees(m_nav.getYaw());
 		}
 		else {
-			return Pathfinder.boundHalfDegrees(m_nav.getYaw() + 180);
+			return Pathfinder.boundHalfDegrees(m_nav.getYaw());
 		}
 	}
 	
@@ -213,7 +213,7 @@ public class Drive extends Subsystem {
 	
     public void calcXY() {
     	// calculate x,y coordinates when moving in straight lines and turning in place, DOES NOT WORK
-    	double m_currentDistance = (getRightMasterPosition() + getLeftMasterPosition())/2;
+    	double m_currentDistance = (m_rightMaster.getEncoderPositionFeet() + m_leftMaster.getEncoderPositionFeet())/2;
     	double m_distanceTraveled = (m_currentDistance - m_previousDistance);
     	double angle = getRawYaw();
     	m_currentX = m_currentX + m_distanceTraveled * Math.sin(Math.toRadians(angle));
@@ -320,8 +320,8 @@ public class Drive extends Subsystem {
 			try {
 				double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
 				m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(getRightMasterPosition()) + ","
-						+ String.valueOf(getLeftMasterPosition()) + "," + String.valueOf(getRightMasterSpeed()) + ","
-						+ String.valueOf(getLeftMasterSpeed()) + "," + String.valueOf(m_rightDesiredVel) + "," + String.valueOf(m_leftDesiredVel)
+						+ String.valueOf(getLeftMasterPosition()) + "," + String.valueOf(m_rightMaster.getLinearVelocity()) + ","
+						+ String.valueOf(m_leftMaster.getLinearVelocity()) + "," + String.valueOf(m_rightDesiredVel) + "," + String.valueOf(m_leftDesiredVel)
 						+ "," + String.valueOf(m_rightMaster.getMotorOutputVoltage())
 						+ "," + String.valueOf(m_leftMaster.getMotorOutputVoltage()) + ","
 						+ String.valueOf(m_rightMaster.getOutputCurrent()) + ","

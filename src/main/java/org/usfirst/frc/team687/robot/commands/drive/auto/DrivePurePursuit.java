@@ -9,6 +9,8 @@ package org.usfirst.frc.team687.robot.commands.drive.auto;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Trajectory.Segment;
 
@@ -58,7 +60,7 @@ public class DrivePurePursuit extends Command {
     m_robotY = Robot.drive.getYpos();
     m_currentSegment = TrajectoryUtils.getClosestSegment(m_robotX, m_robotY, m_trajectory, m_index, 5);
     m_index = Arrays.asList(m_trajectory).indexOf(m_currentSegment);
-    m_segment2 = TrajectoryUtils.getCloserSegment(m_robotX, m_robotY, m_currentSegment, m_segment2);
+    m_segment2 = TrajectoryUtils.getCloserSegment(m_robotX, m_robotY, m_trajectory.get(m_index-1),  m_trajectory.get(m_index + 1));
     
     m_x1 = m_currentSegment.x;
     m_y1 = m_currentSegment.y;
@@ -163,6 +165,7 @@ public class DrivePurePursuit extends Command {
     m_prevTime = m_time;
     m_leftPrevError = m_leftError;
     m_rightPrevError = m_rightError;
+    SmartDashboard.putNumber("left desired vel", m_leftDesiredVel);
   }
 
   // Make this return true when this Command no longer needs to run execute()
