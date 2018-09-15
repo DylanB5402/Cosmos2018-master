@@ -47,11 +47,11 @@ public class OI {
 	}
 	
 	public double getLeftX() {
-		return leftStick.getX();
+		return Math.pow(leftStick.getX(), 2) * Math.signum(leftStick.getX());
 	}
 	
 	public double getRightY() {
-		return -rightStick.getY();
+		return -Math.pow(rightStick.getY(), 2) * Math.signum(rightStick.getY());	
 	}
 	
 	public double getRightX() {

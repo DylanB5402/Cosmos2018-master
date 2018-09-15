@@ -203,7 +203,7 @@ public class Drive extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
-        setDefaultCommand(new ClosedLoopTankDrive());
+        setDefaultCommand(new ArcadeDrive());
     }   
     
 	public void resetXY() {
