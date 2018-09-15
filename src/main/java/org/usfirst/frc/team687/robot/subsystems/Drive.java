@@ -39,7 +39,7 @@ public class Drive extends Subsystem {
     
     private String m_filePath1 = "/media/sda1/logs/";
 	private String m_filePath2 = "/home/lvuser/logs/";
-	private String m_fileName = "2018_08_31_VelocityTest";
+	private String m_fileName = "2018_09_15_pathfinder_test";
     private File m_file;
     public FileWriter m_writer;
     private boolean writeException = false;

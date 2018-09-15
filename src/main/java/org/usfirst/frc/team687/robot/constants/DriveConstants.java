@@ -22,7 +22,6 @@ public class DriveConstants {
 	public static final int kRightCruiseVelocity = 0;
 
 //	Rot PID Constants
-	public static final double kRotP = 0;
 	public static final double kDriveRotationTolerance = 0;
 	public static final double kMaxRotPower = 0.8;
 	public static final double kMinRotPower = 0;
@@ -64,16 +63,17 @@ public class DriveConstants {
 
 	// new gains for pf
 	public static final double kLeftStatic = 1.479/12;
-	public static final double kLeftV = 0.000251895;
-	public static final double kLeftVelocityP = 0.0004;
-	public static final double kLeftVelocityD = 0.00015;
+	public static final double kLeftV = 0.0301463;
+	public static final double kLeftVelocityP = 0.0001;
+	public static final double kLeftVelocityD = 0;
 
 
 	public static final double kRightStatic = 1.495/12;
-	public static final double kRightV = 0.000251895;
-	public static final double kRightVelocityP = 0.0004;
-	public static final double kRightVelocityD = 0.00015;
+	public static final double kRightV = 0.0301463;
+	public static final double kRightVelocityP = 0.0001;
+	public static final double kRightVelocityD = 0;
 
+	public static final double kRotP = 0;
 	
 	public static final double kTicksPerFoot = 16800;
 

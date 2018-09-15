@@ -38,7 +38,6 @@ public class DriveTrajectory extends Command {
     m_rightTrajectory = m_modifier.getRightTrajectory();
     m_leftFollower = new DistanceFollower(m_leftTrajectory);
     m_rightFollower = new DistanceFollower(m_rightTrajectory);
-
     m_leftFollower.configurePIDVA(DriveConstants.kLeftVelocityP, 0, DriveConstants.kLeftVelocityD, DriveConstants.kLeftV, 0);
     m_rightFollower.configurePIDVA(DriveConstants.kRightVelocityP, 0, DriveConstants.kRightVelocityD, DriveConstants.kRightV, 0);
   }
