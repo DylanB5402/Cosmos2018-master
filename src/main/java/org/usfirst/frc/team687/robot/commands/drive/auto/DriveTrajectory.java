@@ -7,8 +7,6 @@
 
 package org.usfirst.frc.team687.robot.commands.drive.auto;
 
-import javax.sound.midi.Track;
-
 import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.constants.DriveConstants;
 import org.usfirst.frc.team687.robot.constants.AutoConstants;
@@ -65,7 +63,10 @@ public class DriveTrajectory extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+<<<<<<< HEAD
     Robot.drive.setPowerZero();
+=======
+>>>>>>> master
   }
 
   // Called when another command which requires one or more of the same
