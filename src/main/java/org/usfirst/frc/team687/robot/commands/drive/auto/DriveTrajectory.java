@@ -48,7 +48,7 @@ public class DriveTrajectory extends Command {
   protected void execute() {
     m_leftOutput = m_leftFollower.calculate(Robot.drive.getLeftPositionFeet()) + DriveConstants.kLeftStatic;
     m_rightOutput = m_rightFollower.calculate(Robot.drive.getRightPositionFeet()) + DriveConstants.kRightStatic;
-    m_angularError = Pathfinder.boundHalfDegrees(Pathfinder.r2d(m_leftFollower.getHeading()) - Robot.drive.getRawYaw());
+    m_angularError = Pathfinder.boundHalfDegrees(Pathfinder.r2d(-m_leftFollower.getHeading()) - Robot.drive.getRawYaw());
     m_turn = DriveConstants.kRotP * m_angularError;
     Robot.drive.addDesiredVelocities(m_leftFollower.getSegment().velocity, m_rightFollower.getSegment().velocity);
     Robot.drive.setPower(m_leftOutput + m_turn, m_rightOutput - m_turn);
@@ -63,10 +63,7 @@ public class DriveTrajectory extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-<<<<<<< HEAD
     Robot.drive.setPowerZero();
-=======
->>>>>>> master
   }
 
   // Called when another command which requires one or more of the same
