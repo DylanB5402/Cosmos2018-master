@@ -21,11 +21,14 @@ import jaci.pathfinder.followers.DistanceFollower;
 public class DriveTrajectory extends Command {
   private Trajectory m_leftTrajectory, m_rightTrajectory, m_sourceTrajectory;
   private DistanceFollower m_leftFollower, m_rightFollower;
-  private double m_leftOutput, m_rightOutput, m_turn, m_angularError;
+  private double m_leftOutput, m_rightOutput, m_turn, m_angularError, m_angle,
+  m_leftPosition, m_rightPosition, m_sign,;
   private TankModifier m_modifier;
+  private boolean m_forwards;
 
-  public DriveTrajectory(Trajectory traj) {
+  public DriveTrajectory(Trajectory traj, boolean forwards) {
     m_sourceTrajectory = traj;
+    m_forwards = forwards;
     requires(Robot.drive);
   }
 
@@ -33,24 +36,44 @@ public class DriveTrajectory extends Command {
   @Override
   protected void initialize() {
     m_modifier = new TankModifier(m_sourceTrajectory);
-    m_modifier.modify(DriveConstants.kDrivetrainWidth);    
-    m_leftTrajectory = m_modifier.getLeftTrajectory();
-    m_rightTrajectory = m_modifier.getRightTrajectory();
+    m_modifier.modify(DriveConstants.kDrivetrainWidth);  
+
+    if (m_forwards) {
+      m_leftTrajectory = m_modifier.getLeftTrajectory();
+      m_rightTrajectory = m_modifier.getRightTrajectory();
+      m_sign = 1;
+    }
+    else {
+      m_leftTrajectory = m_modifier.getRightTrajectory();
+      m_rightTrajectory = m_modifier.getLeftTrajectory();
+      m_sign = -1;
+    }
+
     m_leftFollower = new DistanceFollower(m_leftTrajectory);
     m_rightFollower = new DistanceFollower(m_rightTrajectory);
-    m_leftFollower.configurePIDVA(DriveConstants.kLeftVelocityP, 0, DriveConstants.kLeftVelocityD, DriveConstants.kLeftV, 0);
-    m_rightFollower.configurePIDVA(DriveConstants.kRightVelocityP, 0, DriveConstants.kRightVelocityD, DriveConstants.kRightV, 0);
+    m_leftFollower.configurePIDVA(DriveConstants.kLeftVelocityP, 0, DriveConstants.kLeftVelocityD, DriveConstants.kLeftV, 0.003);
+    m_rightFollower.configurePIDVA(DriveConstants.kRightVelocityP, 0, DriveConstants.kRightVelocityD, DriveConstants.kRightV, 0.003);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    m_leftOutput = m_leftFollower.calculate(Robot.drive.getLeftPositionFeet()) + DriveConstants.kLeftStatic;
-    m_rightOutput = m_rightFollower.calculate(Robot.drive.getRightPositionFeet()) + DriveConstants.kRightStatic;
-    m_angularError = Pathfinder.boundHalfDegrees(Pathfinder.r2d(-m_leftFollower.getHeading()) - Robot.drive.getRawYaw());
+    m_angle = Robot.drive.getRawYaw();    
+    m_leftPosition = Robot.drive.getLeftPositionFeet();
+    m_rightPosition = Robot.drive.getLeftPositionFeet();
+    m_angle = Robot.drive.getRawYaw();
+    if (!m_forwards) {
+      m_leftPosition = -m_leftPosition;
+      m_rightPosition = -m_rightPosition;
+    }
+    m_leftOutput = m_sign * m_leftFollower.calculate(m_leftPosition) + DriveConstants.kLeftStatic;
+    m_rightOutput = m_sign * m_rightFollower.calculate(m_rightPosition) + DriveConstants.kRightStatic;
+
+    m_angularError = Pathfinder.boundHalfDegrees(-Pathfinder.r2d(m_leftFollower.getHeading()) - m_angle);
     m_turn = DriveConstants.kRotP * m_angularError;
     Robot.drive.addDesiredVelocities(m_leftFollower.getSegment().velocity, m_rightFollower.getSegment().velocity);
     Robot.drive.setPower(m_leftOutput + m_turn, m_rightOutput - m_turn);
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
