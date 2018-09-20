@@ -23,6 +23,13 @@ deploy {
             // Debug can be overridden by command line, for use with VSCode
             debug = getDebugOrDefault(false)
         }
+
+        // ty 3863
+        artifact('paths', FileCollectionArtifact) {
+            files = project.fileTree(dir: 'src/main/resources/paths')
+            directory = '/home/lvuser/paths'
+            targets << "roborio"
+        
     }
 }
 

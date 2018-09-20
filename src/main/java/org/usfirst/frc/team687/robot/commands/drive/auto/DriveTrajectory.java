@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team687.robot.commands.drive.auto;
 
+import java.io.File;
+
 import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.constants.DriveConstants;
 import org.usfirst.frc.team687.robot.constants.AutoConstants;
@@ -26,18 +28,27 @@ public class DriveTrajectory extends Command {
 
   public DriveTrajectory(Trajectory traj) {
     m_sourceTrajectory = traj;
-    requires(Robot.drive);
-  }
-
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
     m_modifier = new TankModifier(m_sourceTrajectory);
     m_modifier.modify(DriveConstants.kDrivetrainWidth);    
     m_leftTrajectory = m_modifier.getLeftTrajectory();
     m_rightTrajectory = m_modifier.getRightTrajectory();
     m_leftFollower = new DistanceFollower(m_leftTrajectory);
     m_rightFollower = new DistanceFollower(m_rightTrajectory);
+    requires(Robot.drive);
+  }
+
+  public DriveTrajectory(String file) {
+    File traj = new File("/home/lvuser/paths/" + file);
+    m_sourceTrajectory = Pathfinder.readFromFile(traj);
+    File leftTraj = new File("/home/lvuser/paths/" + file + "_left.traj");
+    m_leftTrajectory = Pathfinder.readFromFile(leftTraj);
+    File rightTraj = new File("/home/lvuser/paths/" + file + "_right.traj");
+    m_rightTrajectory = Pathfinder.readFromFile(rightTraj);
+  }
+
+  // Called just before this Command runs the first time
+  @Override
+  protected void initialize() {
     m_leftFollower.configurePIDVA(DriveConstants.kLeftVelocityP, 0, DriveConstants.kLeftVelocityD, DriveConstants.kLeftV, 0);
     m_rightFollower.configurePIDVA(DriveConstants.kRightVelocityP, 0, DriveConstants.kRightVelocityD, DriveConstants.kRightV, 0);
   }

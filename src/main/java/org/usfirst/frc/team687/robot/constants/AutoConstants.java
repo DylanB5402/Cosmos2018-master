@@ -19,7 +19,7 @@ public class AutoConstants {
     private static Config test_config = new Config(Trajectory.FitMethod.HERMITE_CUBIC, Config.SAMPLES_HIGH, dt, kCruiseVelocity, kAcceleration, kJerk);
     private static Waypoint[] test_points = new Waypoint[] {
         new Waypoint(0, 0, 0),
-        new Waypoint(5, 0, 0)  
+        new Waypoint(5, -5, 0)  
     };
     public static Trajectory testTraj = Pathfinder.generate(test_points, test_config);
     

@@ -38,8 +38,8 @@ public class OI {
 		SmartDashboard.putData("Velocity Test", new VelocityTest(7000, 6));
 
 		directionChooser = new SendableChooser<>();
-		directionChooser.addObject("Forward", "Forward");
-		directionChooser.addObject("Backwards", "Backwards");
+		// directionChooser.addObject("Forward", "Forward");
+		// directionChooser.addObject("Backwards", "Backwards");
 		SmartDashboard.putData("Direction Chooser", directionChooser);
 		SmartDashboard.putData("Open loop", new DriveOpenLoop());
 		// SmartDashboard.putData("Pure pursuit Test", new DrivePurePursuit(AutoConstants.test, 1.5, true));
