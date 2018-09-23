@@ -21,7 +21,7 @@ class TrajectoryFactory:
 factory = TrajectoryFactory("src/main/resources/paths/", 2.09766)
 
 factory.add_trajectory("right_to_right_switch_back", pathfinder.generate( 
-                                        [ pathfinder.Waypoint(0, 2.5, 0),
+                                        [pathfinder.Waypoint(0, 2.5, 0),
                                         pathfinder.Waypoint(14, 2.5, 0),
                                         pathfinder.Waypoint(22, 7.5, 0)],
                                         pathfinder.FIT_HERMITE_CUBIC, pathfinder.SAMPLES_HIGH,
