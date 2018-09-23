@@ -1,3 +1,5 @@
+import jaci.gradle.deploy.artifact.FileCollectionArtifact
+
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2019.0.0-alpha-3"
@@ -29,6 +31,7 @@ deploy {
             files = project.fileTree(dir: 'src/main/resources/paths')
             directory = '/home/lvuser/paths'
             targets << "roborio"
+        }
         
     }
 }

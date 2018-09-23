@@ -12,6 +12,7 @@ import java.io.File;
 import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.constants.DriveConstants;
 import org.usfirst.frc.team687.robot.constants.AutoConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj.command.Command;
 import jaci.pathfinder.Pathfinder;
@@ -32,23 +33,24 @@ public class DriveTrajectory extends Command {
     m_modifier.modify(DriveConstants.kDrivetrainWidth);    
     m_leftTrajectory = m_modifier.getLeftTrajectory();
     m_rightTrajectory = m_modifier.getRightTrajectory();
-    m_leftFollower = new DistanceFollower(m_leftTrajectory);
-    m_rightFollower = new DistanceFollower(m_rightTrajectory);
     requires(Robot.drive);
   }
 
   public DriveTrajectory(String file) {
-    File traj = new File("/home/lvuser/paths/" + file);
+    File traj = new File("/home/lvuser/paths/" + file + "_source.traj");
     m_sourceTrajectory = Pathfinder.readFromFile(traj);
     File leftTraj = new File("/home/lvuser/paths/" + file + "_left.traj");
     m_leftTrajectory = Pathfinder.readFromFile(leftTraj);
     File rightTraj = new File("/home/lvuser/paths/" + file + "_right.traj");
     m_rightTrajectory = Pathfinder.readFromFile(rightTraj);
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    m_leftFollower = new DistanceFollower(m_leftTrajectory);
+    m_rightFollower = new DistanceFollower(m_rightTrajectory);
     m_leftFollower.configurePIDVA(DriveConstants.kLeftVelocityP, 0, DriveConstants.kLeftVelocityD, DriveConstants.kLeftV, 0);
     m_rightFollower.configurePIDVA(DriveConstants.kRightVelocityP, 0, DriveConstants.kRightVelocityD, DriveConstants.kRightV, 0);
   }
@@ -61,7 +63,8 @@ public class DriveTrajectory extends Command {
     m_angularError = Pathfinder.boundHalfDegrees(Pathfinder.r2d(-m_leftFollower.getHeading()) - Robot.drive.getRawYaw());
     m_turn = DriveConstants.kRotP * m_angularError;
     Robot.drive.addDesiredVelocities(m_leftFollower.getSegment().velocity, m_rightFollower.getSegment().velocity);
-    Robot.drive.setPower(m_leftOutput + m_turn, m_rightOutput - m_turn);
+    // Robot.drive.setPower(m_leftOutput + m_turn, m_rightOutput - m_turn);
+    SmartDashboard.putNumber("Velocity", m_leftFollower.getSegment().velocity);
   }
 
   // Make this return true when this Command no longer needs to run execute()
