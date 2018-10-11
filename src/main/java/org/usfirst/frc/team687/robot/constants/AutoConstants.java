@@ -26,7 +26,7 @@ public class AutoConstants {
         new Waypoint(0, 3.5, 0), new Waypoint(11, 3.5, 0), new Waypoint(14, 7, Pathfinder.d2r(90))
     };
      private static Waypoint[] rightToRightSwitchPointsPart2 = new Waypoint[] {
-        new Waypoint(14, 7, Pathfinder.d2r(90))), new Waypoint(16, 5, 0), new Waypoint(21, 7.5, 0)
+        new Waypoint(14, 7, Pathfinder.d2r(90)), new Waypoint(16, 5, 0), new Waypoint(21, 7.5, 0)
     };
     public static Trajectory testTraj = Pathfinder.generate(testPoints, testConfig);
     public static Trajectory rightToRightSwitchTrajPart1 = Pathfinder.generate(rightToRightSwitchPointsPart1, testConfig);

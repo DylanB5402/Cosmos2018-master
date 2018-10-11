@@ -44,7 +44,6 @@ public class OI {
 		SmartDashboard.putData("Open loop", new DriveOpenLoop());
 		// SmartDashboard.putData("Pure pursuit Test", new DrivePurePursuit(AutoConstants.test, 1.5, true));
 		// SmartDashboard.putString("Direction", getStartingDirection());
-		SmartDashboard.putData("Pf Test", new DriveTrajectory(AutoConstants.rightToRightSwitchTrajPart2, false));
 	}
 	
 	public String getStartingDirection() {

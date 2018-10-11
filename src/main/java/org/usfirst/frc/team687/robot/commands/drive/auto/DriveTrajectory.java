@@ -22,7 +22,7 @@ public class DriveTrajectory extends Command {
   private Trajectory m_leftTrajectory, m_rightTrajectory, m_sourceTrajectory;
   private DistanceFollower m_leftFollower, m_rightFollower;
   private double m_leftOutput, m_rightOutput, m_turn, m_angularError, m_angle,
-  m_leftPosition, m_rightPosition, m_sign,;
+  m_leftPosition, m_rightPosition, m_sign;
   private TankModifier m_modifier;
   private boolean m_forwards;
 
