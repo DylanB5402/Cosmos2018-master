@@ -11,7 +11,7 @@ import org.usfirst.frc.team687.robot.commands.drive.ResetDriveEncoders;
 import org.usfirst.frc.team687.robot.commands.drive.ResetGyro;
 import org.usfirst.frc.team687.robot.commands.drive.auto.DriveOpenLoop;
 import org.usfirst.frc.team687.robot.commands.drive.auto.DriveTrajectory;
-import org.usfirst.frc.team687.robot.commands.drive.auto.DrivePurePursuit;
+// import org.usfirst.frc.team687.robot.commands.drive.auto.DrivePurePursuit;
 import org.usfirst.frc.team687.robot.commands.drive.characterization.DriveCharacterizationTest;
 import org.usfirst.frc.team687.robot.commands.drive.characterization.VelocityTest;
 import org.usfirst.frc.team687.robot.constants.AutoConstants;

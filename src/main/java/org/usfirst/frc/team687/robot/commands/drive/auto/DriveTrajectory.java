@@ -38,10 +38,13 @@ public class DriveTrajectory extends Command {
 
   public DriveTrajectory(String file) {
     File traj = new File("/home/lvuser/paths/" + file + "_source.traj");
+    SmartDashboard.putBoolean("Source exists", true);
     m_sourceTrajectory = Pathfinder.readFromFile(traj);
     File leftTraj = new File("/home/lvuser/paths/" + file + "_left.traj");
+    SmartDashboard.putBoolean("Left exists", true);
     m_leftTrajectory = Pathfinder.readFromFile(leftTraj);
     File rightTraj = new File("/home/lvuser/paths/" + file + "_right.traj");
+    SmartDashboard.putBoolean("Right exists", true);
     m_rightTrajectory = Pathfinder.readFromFile(rightTraj);
     
   }
