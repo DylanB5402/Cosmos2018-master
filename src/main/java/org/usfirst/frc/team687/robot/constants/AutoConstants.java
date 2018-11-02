@@ -20,7 +20,20 @@ public class AutoConstants {
     private static Waypoint[] test_points = new Waypoint[] {
         new Waypoint(0, 0, 0),
         new Waypoint(5, -5, 0)  
+
+    private static Config testConfig = new Config(Trajectory.FitMethod.HERMITE_CUBIC, Config.SAMPLES_HIGH, dt, kCruiseVelocity, kAcceleration, kJerk);
+    private static Waypoint[] testPoints = new Waypoint[] {
+        new Waypoint(0, 12, 0),
+        new Waypoint(7, 8, 0) 
+        // new Waypoint(5, 7, Pathfinder.d2r(90)) 
+
     };
-    public static Trajectory testTraj = Pathfinder.generate(test_points, test_config);
-    
+    private static Waypoint[] rightToRightSwitchPointsPart1 = new Waypoint[] {
+        new Waypoint(0, 3.5, 0), new Waypoint(11, 3.5, 0), new Waypoint(14, 7, Pathfinder.d2r(90))
+    };
+     private static Waypoint[] rightToRightSwitchPointsPart2 = new Waypoint[] {
+        new Waypoint(14, 7, Pathfinder.d2r(90)), new Waypoint(16, 5, 0), new Waypoint(21, 7.5, 0)
+    };
+    public static Trajectory testTraj = Pathfinder.generate(testPoints, testConfig);
+    public static Trajectory rightToRightSwitchTrajPart1 = Pathfinder.generate(rightToRightSwitchPointsPart1, testConfig);
 }
