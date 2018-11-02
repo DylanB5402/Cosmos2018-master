@@ -1,3 +1,5 @@
+import jaci.gradle.deploy.artifact.FileCollectionArtifact
+
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2019.0.0-alpha-3"
@@ -23,6 +25,14 @@ deploy {
             // Debug can be overridden by command line, for use with VSCode
             debug = getDebugOrDefault(false)
         }
+
+        // ty 3863
+        artifact('paths', FileCollectionArtifact) {
+            files = project.fileTree(dir: 'src/main/resources/paths')
+            directory = '/home/lvuser/paths'
+            targets << "roborio"
+        }
+        
     }
 }
 

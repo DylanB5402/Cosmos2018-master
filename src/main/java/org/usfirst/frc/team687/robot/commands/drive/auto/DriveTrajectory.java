@@ -7,9 +7,12 @@
 
 package org.usfirst.frc.team687.robot.commands.drive.auto;
 
+import java.io.File;
+
 import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.constants.DriveConstants;
 import org.usfirst.frc.team687.robot.constants.AutoConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj.command.Command;
 import jaci.pathfinder.Pathfinder;
@@ -28,27 +31,30 @@ public class DriveTrajectory extends Command {
 
   public DriveTrajectory(Trajectory traj, boolean forwards) {
     m_sourceTrajectory = traj;
-    m_forwards = forwards;
+    m_modifier = new TankModifier(m_sourceTrajectory);
+    m_modifier.modify(DriveConstants.kDrivetrainWidth);    
+    m_leftTrajectory = m_modifier.getLeftTrajectory();
+    m_rightTrajectory = m_modifier.getRightTrajectory();
+
     requires(Robot.drive);
+  }
+
+  public DriveTrajectory(String file) {
+    File traj = new File("/home/lvuser/paths/" + file + "_source.traj");
+    SmartDashboard.putBoolean("Source exists", true);
+    m_sourceTrajectory = Pathfinder.readFromFile(traj);
+    File leftTraj = new File("/home/lvuser/paths/" + file + "_left.traj");
+    SmartDashboard.putBoolean("Left exists", true);
+    m_leftTrajectory = Pathfinder.readFromFile(leftTraj);
+    File rightTraj = new File("/home/lvuser/paths/" + file + "_right.traj");
+    SmartDashboard.putBoolean("Right exists", true);
+    m_rightTrajectory = Pathfinder.readFromFile(rightTraj);
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    m_modifier = new TankModifier(m_sourceTrajectory);
-    m_modifier.modify(DriveConstants.kDrivetrainWidth);  
-
-    if (m_forwards) {
-      m_leftTrajectory = m_modifier.getLeftTrajectory();
-      m_rightTrajectory = m_modifier.getRightTrajectory();
-      m_sign = 1;
-    }
-    else {
-      m_leftTrajectory = m_modifier.getRightTrajectory();
-      m_rightTrajectory = m_modifier.getLeftTrajectory();
-      m_sign = -1;
-    }
-
     m_leftFollower = new DistanceFollower(m_leftTrajectory);
     m_rightFollower = new DistanceFollower(m_rightTrajectory);
     m_leftFollower.configurePIDVA(DriveConstants.kLeftVelocityP, 0, DriveConstants.kLeftVelocityD, DriveConstants.kLeftV, 0.003);
@@ -72,8 +78,8 @@ public class DriveTrajectory extends Command {
     m_angularError = Pathfinder.boundHalfDegrees(-Pathfinder.r2d(m_leftFollower.getHeading()) - m_angle);
     m_turn = DriveConstants.kRotP * m_angularError;
     Robot.drive.addDesiredVelocities(m_leftFollower.getSegment().velocity, m_rightFollower.getSegment().velocity);
-    Robot.drive.setPower(m_leftOutput + m_turn, m_rightOutput - m_turn);
 
+    Robot.drive.setPower(m_leftOutput + m_turn, m_rightOutput - m_turn);
   }
 
   // Make this return true when this Command no longer needs to run execute()

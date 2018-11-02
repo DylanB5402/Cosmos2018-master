@@ -102,11 +102,8 @@ public class Drive extends Subsystem {
 		m_leftSlave1.configDefaultSettings();
 		m_leftSlave2.configDefaultSettings();
 
-		m_leftMaster.configLinearUnits(DriveConstants.kTicksPerFoot);
-		m_rightMaster.configLinearUnits(DriveConstants.kTicksPerFoot);
-		
-		m_velocityPIDF = new VelocityPIDF();
-		m_velocityNotifier = new Notifier(m_velocityPIDF);
+		m_rightMaster.configPIDF(DriveConstants.kRightVelocityP, 0, DriveConstants.kRightVelocityD, DriveConstants.kRightV, 0);
+		m_leftMaster.configPIDF(DriveConstants.kLeftVelocityP, 0, DriveConstants.kLeftVelocityD, DriveConstants.kLeftV, 0);
 	}
 	
 	public void setPower(double leftPower, double rightPower) {
@@ -138,6 +135,7 @@ public class Drive extends Subsystem {
 	public void setVelocity(double leftVel, double rightVel) {
 		m_rightMaster.set(ControlMode.Velocity, rightVel);
 		m_leftMaster.set(ControlMode.Velocity, leftVel);
+		
 	}
 	
 	public void resetEncoders() {
@@ -230,41 +228,37 @@ public class Drive extends Subsystem {
     }
 	
 	public double ticksToFeet(double ticks) {
-		return m_leftMaster.ticksToFeet(ticks);
+		return ticks / DriveConstants.kTicksPerFoot;
 	}
 	
 	public double feetToTicks(double feet) {
-		return m_leftMaster.feetToTicks(feet);
+		return feet * DriveConstants.kTicksPerFoot;
 	}
 
 	public double getLeftVelocityFeet() {
-		return m_leftMaster.getLinearVelocity();
+		return ticksToFeet(m_leftMaster.getSelectedSensorVelocity(0) / 0.1);
 	}
 
 	public double getRightVelocityFeet() {
-		return m_rightMaster.getLinearVelocity();
+		return ticksToFeet(m_rightMaster.getSelectedSensorVelocity(0) / 0.1);
 	}
 
 	public double getLeftPositionFeet() {
-		return m_leftMaster.getEncoderPositionFeet();
+		return ticksToFeet(m_leftMaster.getSelectedSensorPosition(0));
 	}
 
 	public double getRightPositionFeet() {
-		return m_rightMaster.getEncoderPositionFeet();
+		return m_rightMaster.getSelectedSensorPosition(0) / DriveConstants.kTicksPerFoot;
 	}
 
-	public void startVelocityController() {
-		m_velocityNotifier.startPeriodic(DriveConstants.kVelocityPIDPeriod);
+	public double fpsToTalonVelocityUnits(double fps) {
+		return feetToTicks(fps)/10;
 	}
 
-	public void setTargetVelocities(double left, double right) {
-		m_velocityPIDF.setVelocity(left, right);
+	public void setVelocityFPS(double leftVel, double rightVel) {
+		setVelocity(fpsToTalonVelocityUnits(leftVel), fpsToTalonVelocityUnits(rightVel));
 	}
 
-	public void stopVelocityPIDF() {
-		m_velocityPIDF.stop();
-		m_velocityNotifier.stop();
-	}
 
     public void reportToSmartDashboard() {
     	SmartDashboard.putNumber("Left Master Voltage", getLeftOutputVoltage());
