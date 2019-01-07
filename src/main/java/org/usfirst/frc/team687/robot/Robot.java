@@ -7,24 +7,19 @@
 
 package org.usfirst.frc.team687.robot;
 
-import edu.wpi.first.wpilibj.Notifier;
+import org.usfirst.frc.team687.robot.subsystems.Arm;
+import org.usfirst.frc.team687.robot.subsystems.Drive;
+import org.usfirst.frc.team687.robot.subsystems.IntakeWheel;
+
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team687.robot.commands.drive.characterization.VelocityPIDF;
-import org.usfirst.frc.team687.robot.constants.DriveConstants;
-import org.usfirst.frc.team687.robot.subsystems.Arm;
-import org.usfirst.frc.team687.robot.subsystems.Claw;
-import org.usfirst.frc.team687.robot.subsystems.Drive;
 
 /**
  * 
- * @author dbarv
- * Code heavily based on Tedklin's, 90% is based on stuff I've learned from him
+ * @author dbarv Code heavily based on Tedklin's, 90% is based on stuff I've
+ *         learned from him
  *
  */
 
@@ -32,8 +27,9 @@ public class Robot extends TimedRobot {
 	public static PowerDistributionPanel pdp;
 	public static Drive drive;
 	public static Arm arm;
-	public static Claw claw;
 	public static OI oi;
+	public static IntakeWheel intakeWheel;
+	public static final String kDate = "2019_01_05_";
 
 
 	/**
@@ -45,8 +41,9 @@ public class Robot extends TimedRobot {
 		pdp = new PowerDistributionPanel();
 		arm = new Arm();
 		drive = new Drive();
-		claw = new Claw();
 		oi = new OI();
+		intakeWheel = new IntakeWheel();
+
 	}
 
 	/**
@@ -58,6 +55,7 @@ public class Robot extends TimedRobot {
 	public void disabledInit() {
 		Robot.drive.calcXY();
 		Robot.drive.reportToSmartDashboard();
+		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 		Robot.drive.stopLog();
@@ -68,6 +66,7 @@ public class Robot extends TimedRobot {
 		Robot.drive.calcXY();
 		Scheduler.getInstance().run();
 		Robot.drive.reportToSmartDashboard();
+		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 	}
@@ -90,6 +89,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		Robot.drive.reportToSmartDashboard();
+		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
 		Robot.drive.calcXY();
 		SmartDashboard.putData(pdp);
@@ -104,6 +104,7 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		Robot.drive.calcXY();
 		Robot.drive.reportToSmartDashboard();
+		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 		Robot.drive.logToCSV();
@@ -117,6 +118,7 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 		Robot.drive.calcXY();
 		Robot.drive.reportToSmartDashboard();
+		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 
