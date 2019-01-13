@@ -6,18 +6,17 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.usfirst.frc.team687.robot.Robot;
-import org.usfirst.frc.team687.robot.RobotMap;
-import org.usfirst.frc.team687.robot.commands.drive.teleop.ArcadeDrive;
-import org.usfirst.frc.team687.robot.commands.drive.teleop.TankDrive;
-import org.usfirst.frc.team687.robot.commands.drive.teleop.ClosedLoopTankDrive;
-import org.usfirst.frc.team687.robot.constants.DriveConstants;
-import org.usfirst.frc.team687.robot.utilities.NerdyTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
+
+import org.usfirst.frc.team687.robot.Robot;
+import org.usfirst.frc.team687.robot.RobotMap;
 import org.usfirst.frc.team687.robot.commands.drive.characterization.VelocityPIDF;
+import org.usfirst.frc.team687.robot.commands.drive.teleop.ArcadeDrive;
+import org.usfirst.frc.team687.robot.constants.DriveConstants;
+import org.usfirst.frc.team687.robot.utilities.NerdyTalon;
 
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.SPI;
@@ -34,10 +33,10 @@ public class Drive extends Subsystem {
 	private final NerdyTalon m_leftMaster, m_leftSlave1, m_leftSlave2;
 	private final NerdyTalon m_rightMaster, m_rightSlave1, m_rightSlave2;
 	private final AHRS m_nav;
-	
+
 	private double m_previousDistance, m_currentX, m_currentY, m_angleOffset, m_xOffset, m_yOffset;
-    
-    private String m_filePath1 = "/media/sda1/logs/";
+
+	private String m_filePath1 = "/media/sda1/logs/";
 	private String m_filePath2 = "/home/lvuser/logs/";
 	private String m_fileName = "2018_09_15_pathfinder_test";
     private File m_file;

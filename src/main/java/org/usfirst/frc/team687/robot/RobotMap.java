@@ -24,8 +24,8 @@ public class RobotMap {
 	public static final int kRightSlaveTalonSRX2ID = 6;
 
 	public static final int kArmID = 14;
-	public static final int kBigIntakeWheelID = 0;
-	public static final int kLittleIntakeWheelID = 0;
+	public static final int kBigIntakeWheelID = 21;
+	public static final int kLittleIntakeWheelID = 15;
 	public static final int kClawSolenoidID2 = 0;
 	public static final int kClawSolenoidID1 = 1;
 }

@@ -7,19 +7,18 @@
 
 package org.usfirst.frc.team687.robot.commands.intake_wheel;
 
-
 import org.usfirst.frc.team687.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SetIntakeVoltage extends Command {
+public class SetBigIntakeVoltage extends Command {
+    
+private double m_voltage;
   
-  private double m_voltage;
-  
-  public SetIntakeVoltage(double voltage) {
+  public SetBigIntakeVoltage(double voltage) {
     // Use requires() here to declare subsystem dependencies
     m_voltage = voltage;
-    requires(Robot.intakeWheel);
+    requires(Robot.bigIntakeWheel);
   }
 
   // Called just before this Command runs the first time
@@ -30,7 +29,7 @@ public class SetIntakeVoltage extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeWheel.setVoltage(m_voltage);
+    Robot.bigIntakeWheel.setVoltage(m_voltage);
   }
 
   // Make this return true when this Command no longer needs to run execute()

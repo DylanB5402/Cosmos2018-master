@@ -37,11 +37,11 @@ public class NerdyTalon extends TalonSRX {
 		super.configVoltageCompSaturation(voltage, 0);
 		super.enableVoltageCompensation(true);
 	}
-	
-	public void configPeakCurrentLimit(int current) {
-		super.configPeakCurrentLimit(current, 0);
-		super.enableCurrentLimit(true);
-	}
+
+	// public void configPeakCurrentLimit(int current) {
+	// 	super.configPeakCurrentLimit(current, 0);
+	// 	super.enableCurrentLimit(true);
+	// }
 	
 	public void configMotionMagic(int accel, int cruise_vel) {
 		super.configMotionAcceleration(accel, 0);

@@ -36,20 +36,19 @@ public class Arm extends Subsystem {
     private double m_logStartTime = 0;
 
     public Arm() {
-	m_arm = new TalonSRX(RobotMap.kArmID);
-	m_arm.setSensorPhase(true);
-	m_arm.setInverted(true);
-    m_arm.configNominalOutputForward(1, 0);
-    m_arm.configNominalOutputReverse(0, 0);
+    m_arm = new TalonSRX(RobotMap.kArmID);
+    m_arm.configFactoryDefault();
+	m_arm.setSensorPhase(false);
+    m_arm.setInverted(true);
 	m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
-	//m_arm.config_kP(0, ArmConstants.kArmP, 0);
-	//m_arm.config_kI(0, ArmConstants.kArmI, 0);
-    //m_arm.config_kD(0, ArmConstants.kArmD, 0);
-    // m_arm.config_kF(0, ArmConstants.kArmF, 0);
+	m_arm.config_kP(0, ArmConstants.kArmP, 0);
+	m_arm.config_kI(0, ArmConstants.kArmI, 0);
+    m_arm.config_kD(0, ArmConstants.kArmD, 0);
+    m_arm.config_kF(0, ArmConstants.kArmF, 0);
 	m_arm.setNeutralMode(NeutralMode.Brake);
 
-    // m_arm.configMotionAcceleration(ArmConstants.kArmAcceleration, 0);
-    // m_arm.configMotionCruiseVelocity(ArmConstants.kArmCruiseVelocity, 0);
+    m_arm.configMotionAcceleration(ArmConstants.kArmAcceleration, 0);
+    m_arm.configMotionCruiseVelocity(ArmConstants.kArmCruiseVelocity, 0);
 	
 //	m_arm.configForwardSoftLimitThreshold(GearIntakeConstants.kGearIntakeScorePos, 0);
 //	m_arm.configReverseSoftLimitThreshold(GearIntakeConstants.kGearIntakeDownPos, 0);
@@ -59,12 +58,12 @@ public class Arm extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand( new OpenLoopArm());
+        setDefaultCommand(new OpenLoopArm());
     }
 
     public void setPosition(double position) {
-        m_arm.set(ControlMode.MotionMagic, position, 
-            DemandType.ArbitraryFeedForward, ArmConstants.kArmGravityFF * Math.cos(getAngle()));
+        m_arm.set(ControlMode.MotionMagic, position); //, 
+            // DemandType.ArbitraryFeedForward, ArmConstants.kArmGravityFF * Math.cos(getAngle()));
     }
     public void setAngle(double angle) {
         setPosition(angleToTicks(angle));
@@ -135,7 +134,7 @@ public class Arm extends Subsystem {
         Path filePrefix = Paths.get("");
         if (logFolder1.exists() && logFolder1.isDirectory()) {
             filePrefix = Paths.get(logFolder1.toString(),
-                Robot.kDate +"Arm");
+                Robot.kDate + "Arm");
     
         } else if (logFolder2.exists() && logFolder2.isDirectory()) {
     

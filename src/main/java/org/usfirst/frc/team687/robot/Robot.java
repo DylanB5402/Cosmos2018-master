@@ -27,9 +27,9 @@ public class Robot extends TimedRobot {
 	public static PowerDistributionPanel pdp;
 	public static Drive drive;
 	public static Arm arm;
+	public static IntakeWheel littleIntakeWheel, bigIntakeWheel;
 	public static OI oi;
-	public static IntakeWheel intakeWheel;
-	public static final String kDate = "2019_01_05_";
+	public static final String kDate = "2019_01_12_";
 
 
 	/**
@@ -41,8 +41,9 @@ public class Robot extends TimedRobot {
 		pdp = new PowerDistributionPanel();
 		arm = new Arm();
 		drive = new Drive();
+		littleIntakeWheel = new IntakeWheel(RobotMap.kLittleIntakeWheelID);
+		bigIntakeWheel = new IntakeWheel(RobotMap.kBigIntakeWheelID);
 		oi = new OI();
-		intakeWheel = new IntakeWheel();
 
 	}
 
@@ -59,6 +60,7 @@ public class Robot extends TimedRobot {
 		Robot.oi.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 		Robot.drive.stopLog();
+		Robot.arm.stopLog();
 	}
 
 	@Override
@@ -68,6 +70,8 @@ public class Robot extends TimedRobot {
 		Robot.drive.reportToSmartDashboard();
 		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
+		Robot.bigIntakeWheel.reportToSmartDashboard2();
+		Robot.littleIntakeWheel.reportToSmartDashboard1();
 		SmartDashboard.putData(pdp);
 	}
 
@@ -94,6 +98,7 @@ public class Robot extends TimedRobot {
 		Robot.drive.calcXY();
 		SmartDashboard.putData(pdp);
 		Robot.drive.startLog();
+		Robot.arm.startLog();
 	}
 
 	/**
@@ -106,8 +111,11 @@ public class Robot extends TimedRobot {
 		Robot.drive.reportToSmartDashboard();
 		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
+		Robot.bigIntakeWheel.reportToSmartDashboard2();
+		Robot.littleIntakeWheel.reportToSmartDashboard1();
 		SmartDashboard.putData(pdp);
 		Robot.drive.logToCSV();
+		Robot.arm.logToCSV();
 
 	}
 

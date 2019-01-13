@@ -7,22 +7,20 @@
 
 package org.usfirst.frc.team687.robot;
 
-import org.usfirst.frc.team687.robot.commands.drive.ResetDriveEncoders;
+import org.usfirst.frc.team687.robot.commands.arm.ArmSetAngle;
+import org.usfirst.frc.team687.robot.commands.arm.ArmSetPosition;
+import org.usfirst.frc.team687.robot.commands.arm.ResetArmEncoder;
+import org.usfirst.frc.team687.robot.commands.arm.SetArmPower;
 import org.usfirst.frc.team687.robot.commands.drive.ResetGyro;
 import org.usfirst.frc.team687.robot.commands.drive.auto.DriveOpenLoop;
-import org.usfirst.frc.team687.robot.commands.drive.auto.DriveTrajectory;
-import org.usfirst.frc.team687.robot.commands.drive.auto.DrivePurePursuit;
-import org.usfirst.frc.team687.robot.commands.drive.characterization.DriveCharacterizationTest;
-import org.usfirst.frc.team687.robot.commands.drive.characterization.VelocityTest;
-import org.usfirst.frc.team687.robot.commands.intake_wheel.SetIntakeVoltage;
-import org.usfirst.frc.team687.robot.commands.arm.ArmSetPosition;
-import org.usfirst.frc.team687.robot.commands.arm.OpenLoopArm;
+import org.usfirst.frc.team687.robot.commands.intake_wheel.SetBigIntakePower;
+import org.usfirst.frc.team687.robot.commands.intake_wheel.SetLittleIntakePower;
+import org.usfirst.frc.team687.robot.commands.intake_wheel.StopBothRollers;
 import org.usfirst.frc.team687.robot.constants.ArmConstants;
-import org.usfirst.frc.team687.robot.constants.AutoConstants;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team687.robot.commands.arm.ResetArmEncoder;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -41,20 +39,40 @@ public class OI {
 		armStick = new Joystick(2);
 		SmartDashboard.putData("Reset Gyro", new ResetGyro());
 
+		SmartDashboard.putData("Arm -12V" , new SetArmPower(-1));
+		SmartDashboard.putData("Arm -9V" , new SetArmPower(-0.75));
+		SmartDashboard.putData("Arm -6V" , new SetArmPower(-0.5));
+		SmartDashboard.putData("Arm -3V" , new SetArmPower(-0.25));
+		SmartDashboard.putData("Arm 0V" , new SetArmPower(0));
+		SmartDashboard.putData("Arm 3V" , new SetArmPower(0.25));
+		SmartDashboard.putData("Arm 6V" , new SetArmPower(0.5));
+		SmartDashboard.putData("Arm 9V" , new SetArmPower(0.75));
+		SmartDashboard.putData("Arm 1V" , new SetArmPower(1));
 
-		SmartDashboard.putData("Big  Intake -12V" , new SetIntakeVoltage(-12));
-		SmartDashboard.putData("Big Intake -10V" , new SetIntakeVoltage(-10));
-		SmartDashboard.putData("Big Intake -8V" , new SetIntakeVoltage(-8));
-		SmartDashboard.putData("Big Intake -6V" , new SetIntakeVoltage(-6));
-		SmartDashboard.putData("Big Intake -4V" , new SetIntakeVoltage(-4));
-		SmartDashboard.putData("Big Intake -2V" , new SetIntakeVoltage(-2));
-		SmartDashboard.putData("Big Intake 0V" , new SetIntakeVoltage(0));
-		SmartDashboard.putData("Big Intake 2V" , new SetIntakeVoltage(2));
-		SmartDashboard.putData("Big Intake 4V" , new SetIntakeVoltage(4));
-		SmartDashboard.putData("Big Intake 6V" , new SetIntakeVoltage(6));
-		SmartDashboard.putData("Big Intake 8V" , new SetIntakeVoltage(8));
-		SmartDashboard.putData("Big Intake 10V" , new SetIntakeVoltage(10));
-		SmartDashboard.putData("Big Intake 12V" , new SetIntakeVoltage(12));
+		SmartDashboard.putData("Arm 0 degrees", new ArmSetAngle(5));
+		SmartDashboard.putData("Arm 45 degrees", new ArmSetAngle(45));
+		SmartDashboard.putData("Arm Up pos", new ArmSetPosition(ArmConstants.kArmUpPos));
+		SmartDashboard.putData("Stop both rollers", new StopBothRollers());
+		
+		SmartDashboard.putData("Big Intake -12V" , new SetBigIntakePower(-1));
+		SmartDashboard.putData("Big Intake -9V" , new SetBigIntakePower(-0.75));
+		SmartDashboard.putData("Big Intake -6V" , new SetBigIntakePower(-0.5));
+		SmartDashboard.putData("Big Intake -3V" , new SetBigIntakePower(-0.25));
+		SmartDashboard.putData("Big Intake 12V" , new SetBigIntakePower(1));
+		SmartDashboard.putData("Big Intake 9V" , new SetBigIntakePower(0.75));
+		SmartDashboard.putData("Big Intake 6V" , new SetBigIntakePower(0.5));
+		SmartDashboard.putData("Big Intake 3V" , new SetBigIntakePower(0.25));
+		SmartDashboard.putData("Big Intake 0V" , new SetBigIntakePower(0));
+		
+		SmartDashboard.putData("Little Intake -12V" , new SetLittleIntakePower(-1));
+		SmartDashboard.putData("Little Intake -9V" , new SetLittleIntakePower(-0.75));
+		SmartDashboard.putData("Little Intake -6" , new SetLittleIntakePower(-0.5));
+		SmartDashboard.putData("Little Intake -3V" , new SetLittleIntakePower(-0.25));
+		SmartDashboard.putData("Little Intake 0V" , new SetLittleIntakePower(0));
+		SmartDashboard.putData("Little Intake 3V" , new SetLittleIntakePower(0.25));
+		SmartDashboard.putData("Little Intake 6V" , new SetLittleIntakePower(0.5));
+		SmartDashboard.putData("Little Intake 9V" , new SetLittleIntakePower(0.75));
+		SmartDashboard.putData("Little Intake 12V" , new SetLittleIntakePower(1));
 		// SmartDashboard.putData("Drive Characterization Test", new DriveCharacterizationTest(0.5));
 		// SmartDashboard.putData("Velocity Test", new VelocityTest(7000, 6));
 	
@@ -68,7 +86,7 @@ public class OI {
 		SmartDashboard.putData("Open loop", new DriveOpenLoop());
 		// SmartDashboard.putData("Pure pursit Test", new DrivePurePursuit(AutoConstants.test, 1.5, true));
 		// SmartDashboard.putString("Direction", getStartingDirection());
-		SmartDashboard.putData("Pf Test", new DriveTrajectory("right_to_right_switch_back"));
+		// SmartDashboard.putData("Pf Test", new DriveTrajectory("right_to_right_switch_back"));
 	}
 	
 	public String getStartingDirection() {
@@ -94,6 +112,7 @@ public class OI {
 	public double getArmY() {
 		return armStick.getY();
 	}
+
 	public boolean isLeftTriggerPulled() {
 		return leftStick.getRawButton(1);
 	}

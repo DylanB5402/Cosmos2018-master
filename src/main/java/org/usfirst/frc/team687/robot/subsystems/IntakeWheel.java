@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import org.usfirst.frc.team687.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
@@ -22,11 +23,12 @@ public class IntakeWheel extends Subsystem {
 
   private final TalonSRX m_intakeWheel;
 
-  public IntakeWheel() {
-    m_intakeWheel = new TalonSRX(RobotMap.kBigIntakeWheelID);
+  public IntakeWheel(int id) {
+    m_intakeWheel = new TalonSRX(id);
+    m_intakeWheel.configFactoryDefault();
     m_intakeWheel.setInverted(true);
-      m_intakeWheel.configNominalOutputForward(1, 0);
-      m_intakeWheel.configNominalOutputReverse(0, 0);
+      // m_intakeWheel.configNominalOutputForward(0, 0);
+      // m_intakeWheel.configNominalOutputReverse(0, 0);
     m_intakeWheel.setNeutralMode(NeutralMode.Brake);
     }
   
@@ -35,8 +37,20 @@ public class IntakeWheel extends Subsystem {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
-  public void setVoltage( double voltage) {
-    m_intakeWheel.set(ControlMode.PercentOutput, voltage/12. );
+  public void setVoltage(double voltage) {
+    m_intakeWheel.set(ControlMode.PercentOutput, voltage/12.0);
+  }
+
+  public void setPercentOutput(double power) {
+    m_intakeWheel.set(ControlMode.PercentOutput, power);
+  }
+
+  public void reportToSmartDashboard1() {
+    SmartDashboard.putNumber("Little intake voltage", m_intakeWheel.getMotorOutputVoltage());
+  }
+
+  public void reportToSmartDashboard2() {
+    SmartDashboard.putNumber("Big intake voltage", m_intakeWheel.getMotorOutputVoltage());
   }
 }
 
