@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team687.robot;
 
+import com.nerdherd.lib.motor.SingleMotorTalonSRX;
+
 import org.usfirst.frc.team687.robot.subsystems.Arm;
 import org.usfirst.frc.team687.robot.subsystems.Drive;
 import org.usfirst.frc.team687.robot.subsystems.IntakeWheel;
@@ -27,7 +29,7 @@ public class Robot extends TimedRobot {
 	public static PowerDistributionPanel pdp;
 	public static Drive drive;
 	public static Arm arm;
-	public static IntakeWheel littleIntakeWheel, bigIntakeWheel;
+	public static SingleMotorTalonSRX littleIntakeWheel, bigIntakeWheel;
 	public static OI oi;
 	public static final String kDate = "2019_01_12_";
 
@@ -41,8 +43,8 @@ public class Robot extends TimedRobot {
 		pdp = new PowerDistributionPanel();
 		arm = new Arm();
 		drive = new Drive();
-		littleIntakeWheel = new IntakeWheel(RobotMap.kLittleIntakeWheelID);
-		bigIntakeWheel = new IntakeWheel(RobotMap.kBigIntakeWheelID);
+		littleIntakeWheel = new SingleMotorTalonSRX(RobotMap.kLittleIntakeWheelID, "Lower Intake Wheel");
+		bigIntakeWheel = new SingleMotorTalonSRX(RobotMap.kBigIntakeWheelID, "Upper Intake Wheel");
 		oi = new OI();
 
 	}
@@ -70,8 +72,8 @@ public class Robot extends TimedRobot {
 		Robot.drive.reportToSmartDashboard();
 		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
-		Robot.bigIntakeWheel.reportToSmartDashboard2();
-		Robot.littleIntakeWheel.reportToSmartDashboard1();
+		Robot.bigIntakeWheel.reportToSmartDashboard();
+		Robot.littleIntakeWheel.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 	}
 
@@ -111,8 +113,8 @@ public class Robot extends TimedRobot {
 		Robot.drive.reportToSmartDashboard();
 		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
-		Robot.bigIntakeWheel.reportToSmartDashboard2();
-		Robot.littleIntakeWheel.reportToSmartDashboard1();
+		Robot.bigIntakeWheel.reportToSmartDashboard();
+		Robot.littleIntakeWheel.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 		Robot.drive.logToCSV();
 		Robot.arm.logToCSV();

@@ -28,7 +28,7 @@ public class SetLittleIntakePower extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.littleIntakeWheel.setPercentOutput(m_power);
+    Robot.littleIntakeWheel.setPower(m_power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,7 +40,7 @@ public class SetLittleIntakePower extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.littleIntakeWheel.setPercentOutput(0);
+    Robot.littleIntakeWheel.setPower(0);
   }
 
   // Called when another command which requires one or more of the same
