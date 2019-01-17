@@ -16,7 +16,7 @@ public class ArmConstants {
     public static final int kArmIntakePos = 750;
     public static final double kTicksToDegrees = 19.33333333333333;
     public static final int kArmScorePos = 1846;
-    public static final double kArmAngleZeroOffset = -9;
+    public static final double kArmAngleZeroOffset = 0;
     public static final double kArmGravityFF = 3.9;
     
     public static final int kArmCruiseVelocity = 438;

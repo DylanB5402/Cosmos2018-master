@@ -19,6 +19,7 @@ import org.usfirst.frc.team687.robot.commands.intake_wheel.StopBothRollers;
 import org.usfirst.frc.team687.robot.constants.ArmConstants;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -32,11 +33,32 @@ public class OI {
 	public Joystick rightStick;
 	public Joystick armStick;
 	private SendableChooser directionChooser;
+	public JoystickButton intakeTop_1, intakeBottom_2, stopBothIntakes_3, outtakeTop_4, outtakeBottom_5;
+	public JoystickButton downPos_8, upPos_7, horizontalPos_9 ;
 
 	public OI() {
 		leftStick = new Joystick(0);
 		rightStick = new Joystick(1);
 		armStick = new Joystick(2);
+
+		intakeTop_1 = new JoystickButton(armStick, 1);
+		intakeBottom_2 = new JoystickButton(armStick, 2);
+		stopBothIntakes_3 = new JoystickButton(armStick, 3);
+		outtakeTop_4 = new JoystickButton(armStick, 4);
+		outtakeBottom_5 = new JoystickButton(armStick, 5);
+		upPos_7 = new JoystickButton(armStick, 7);
+		downPos_8 = new JoystickButton(armStick, 8);
+		horizontalPos_9 = new JoystickButton(armStick, 9);
+
+		intakeTop_1.whenPressed(new SetBigIntakePower(-0.25));
+		intakeBottom_2.whenPressed(new SetLittleIntakePower(-0.25));
+		stopBothIntakes_3.whenPressed(new StopBothRollers());
+		outtakeTop_4.whenPressed(new SetBigIntakePower(0.25));
+		outtakeBottom_5.whenPressed(new SetLittleIntakePower(0.25));
+		upPos_7.whenPressed(new ArmSetAngle(45));
+		downPos_8.whenPressed(new ArmSetAngle(5));
+		horizontalPos_9.whenPressed(new ArmSetAngle(0));
+
 		SmartDashboard.putData("Reset Gyro", new ResetGyro());
 
 		SmartDashboard.putData("Arm -12V" , new SetArmPower(-1));
@@ -49,7 +71,8 @@ public class OI {
 		SmartDashboard.putData("Arm 9V" , new SetArmPower(0.75));
 		SmartDashboard.putData("Arm 1V" , new SetArmPower(1));
 
-		SmartDashboard.putData("Arm 0 degrees", new ArmSetAngle(5));
+		SmartDashboard.putData("Arm 0 degrees", new ArmSetAngle(0));
+		SmartDashboard.putData("Arm 10 degrees", new ArmSetAngle(10));
 		SmartDashboard.putData("Arm 45 degrees", new ArmSetAngle(45));
 		SmartDashboard.putData("Arm Up pos", new ArmSetPosition(ArmConstants.kArmUpPos));
 		SmartDashboard.putData("Stop both rollers", new StopBothRollers());

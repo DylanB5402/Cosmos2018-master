@@ -11,7 +11,6 @@ import com.nerdherd.lib.motor.SingleMotorTalonSRX;
 
 import org.usfirst.frc.team687.robot.subsystems.Arm;
 import org.usfirst.frc.team687.robot.subsystems.Drive;
-import org.usfirst.frc.team687.robot.subsystems.IntakeWheel;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
