@@ -19,7 +19,7 @@ public class SetLittleIntakeVoltage extends Command {
   public SetLittleIntakeVoltage(double voltage) {
     // Use requires() here to declare subsystem dependencies
     m_voltage = voltage;
-    requires(Robot.littleIntakeWheel);
+    requires(Robot.leftIntakeWheel);
   }
 
   // Called just before this Command runs the first time
@@ -30,7 +30,7 @@ public class SetLittleIntakeVoltage extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.littleIntakeWheel.setVoltage(m_voltage);
+    Robot.leftIntakeWheel.setVoltage(m_voltage);
   }
 
   // Make this return true when this Command no longer needs to run execute()

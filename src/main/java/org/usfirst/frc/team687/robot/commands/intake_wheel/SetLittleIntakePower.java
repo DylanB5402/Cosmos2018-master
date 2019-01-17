@@ -16,7 +16,7 @@ public class SetLittleIntakePower extends Command {
   private double m_power;
 
   public SetLittleIntakePower(double power) {
-    requires(Robot.littleIntakeWheel);
+    requires(Robot.leftIntakeWheel);
     m_power = power;
   }
 
@@ -28,7 +28,7 @@ public class SetLittleIntakePower extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.littleIntakeWheel.setPower(m_power);
+    Robot.leftIntakeWheel.setPower(m_power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,7 +40,7 @@ public class SetLittleIntakePower extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.littleIntakeWheel.setPower(0);
+    Robot.leftIntakeWheel.setPower(0);
   }
 
   // Called when another command which requires one or more of the same

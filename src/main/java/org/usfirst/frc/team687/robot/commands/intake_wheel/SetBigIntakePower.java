@@ -16,7 +16,7 @@ public class SetBigIntakePower extends Command {
   private double m_power;
 
   public SetBigIntakePower(double power) {
-    requires(Robot.bigIntakeWheel);
+    requires(Robot.rightIntakeWheel);
     m_power = power;
   }
 
@@ -28,7 +28,7 @@ public class SetBigIntakePower extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.bigIntakeWheel.setPower(m_power);
+    Robot.rightIntakeWheel.setPower(m_power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,7 +40,7 @@ public class SetBigIntakePower extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.bigIntakeWheel.setPower(0);
+    Robot.rightIntakeWheel.setPower(0);
   }
 
   // Called when another command which requires one or more of the same

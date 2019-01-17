@@ -18,7 +18,7 @@ private double m_voltage;
   public SetBigIntakeVoltage(double voltage) {
     // Use requires() here to declare subsystem dependencies
     m_voltage = voltage;
-    requires(Robot.bigIntakeWheel);
+    requires(Robot.rightIntakeWheel);
   }
 
   // Called just before this Command runs the first time
@@ -29,7 +29,7 @@ private double m_voltage;
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.bigIntakeWheel.setVoltage(m_voltage);
+    Robot.rightIntakeWheel.setVoltage(m_voltage);
   }
 
   // Make this return true when this Command no longer needs to run execute()

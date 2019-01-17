@@ -7,6 +7,10 @@
 
 package org.usfirst.frc.team687.robot;
 
+import com.nerdherd.lib.motor.commands.SetMotorPower;
+import com.nerdherd.lib.pneumatics.commands.ExtendPiston;
+import com.nerdherd.lib.pneumatics.commands.RetractPiston;
+
 import org.usfirst.frc.team687.robot.commands.arm.ArmSetAngle;
 import org.usfirst.frc.team687.robot.commands.arm.ArmSetPosition;
 import org.usfirst.frc.team687.robot.commands.arm.ResetArmEncoder;
@@ -77,27 +81,28 @@ public class OI {
 		SmartDashboard.putData("Arm Up pos", new ArmSetPosition(ArmConstants.kArmUpPos));
 		SmartDashboard.putData("Stop both rollers", new StopBothRollers());
 		
-		SmartDashboard.putData("Big Intake -12V" , new SetBigIntakePower(-1));
-		SmartDashboard.putData("Big Intake -9V" , new SetBigIntakePower(-0.75));
-		SmartDashboard.putData("Big Intake -6V" , new SetBigIntakePower(-0.5));
-		SmartDashboard.putData("Big Intake -3V" , new SetBigIntakePower(-0.25));
-		SmartDashboard.putData("Big Intake 12V" , new SetBigIntakePower(1));
-		SmartDashboard.putData("Big Intake 9V" , new SetBigIntakePower(0.75));
-		SmartDashboard.putData("Big Intake 6V" , new SetBigIntakePower(0.5));
-		SmartDashboard.putData("Big Intake 3V" , new SetBigIntakePower(0.25));
-		SmartDashboard.putData("Big Intake 0V" , new SetBigIntakePower(0));
-		
-		SmartDashboard.putData("Little Intake -12V" , new SetLittleIntakePower(-1));
-		SmartDashboard.putData("Little Intake -9V" , new SetLittleIntakePower(-0.75));
-		SmartDashboard.putData("Little Intake -6" , new SetLittleIntakePower(-0.5));
-		SmartDashboard.putData("Little Intake -3V" , new SetLittleIntakePower(-0.25));
-		SmartDashboard.putData("Little Intake 0V" , new SetLittleIntakePower(0));
-		SmartDashboard.putData("Little Intake 3V" , new SetLittleIntakePower(0.25));
-		SmartDashboard.putData("Little Intake 6V" , new SetLittleIntakePower(0.5));
-		SmartDashboard.putData("Little Intake 9V" , new SetLittleIntakePower(0.75));
-		SmartDashboard.putData("Little Intake 12V" , new SetLittleIntakePower(1));
-		// SmartDashboard.putData("Drive Characterization Test", new DriveCharacterizationTest(0.5));
-		// SmartDashboard.putData("Velocity Test", new VelocityTest(7000, 6));
+		SmartDashboard.putData("Left Intake -12V" , new SetMotorPower(Robot.leftIntakeWheel, -1));
+		SmartDashboard.putData("Left Intake -9V" , new SetMotorPower(Robot.leftIntakeWheel, -0.75));
+		SmartDashboard.putData("Left Intake -6V" , new SetMotorPower(Robot.leftIntakeWheel, -0.5));
+		SmartDashboard.putData("Left Intake -3V" , new SetMotorPower(Robot.leftIntakeWheel, -0.25));
+		SmartDashboard.putData("Left Intake 0V" , new SetMotorPower(Robot.leftIntakeWheel, 0));
+		SmartDashboard.putData("Left Intake 3V" , new SetMotorPower(Robot.leftIntakeWheel, 0.25));
+		SmartDashboard.putData("Left Intake 6V" , new SetMotorPower(Robot.leftIntakeWheel, 0.5));
+		SmartDashboard.putData("Left Intake 9V" , new SetMotorPower(Robot.leftIntakeWheel, 0.75));
+		SmartDashboard.putData("Left Intake 12V" , new SetMotorPower(Robot.leftIntakeWheel, 1));
+
+		SmartDashboard.putData("Right Intake -12V" , new SetMotorPower(Robot.rightIntakeWheel, -1));
+		SmartDashboard.putData("Right Intake -9V" , new SetMotorPower(Robot.rightIntakeWheel, -0.75));
+		SmartDashboard.putData("Right Intake -6V" , new SetMotorPower(Robot.rightIntakeWheel, -0.5));
+		SmartDashboard.putData("Right Intake -3V" , new SetMotorPower(Robot.rightIntakeWheel, -0.25));
+		SmartDashboard.putData("Right Intake 0V" , new SetMotorPower(Robot.rightIntakeWheel, 0));
+		SmartDashboard.putData("Right Intake 3V" , new SetMotorPower(Robot.rightIntakeWheel, 0.25));
+		SmartDashboard.putData("Right Intake 6V" , new SetMotorPower(Robot.rightIntakeWheel, 0.5));
+		SmartDashboard.putData("Right Intake 9V" , new SetMotorPower(Robot.rightIntakeWheel, 0.75));
+		SmartDashboard.putData("Right Intake 12V" , new SetMotorPower(Robot.rightIntakeWheel, 1));
+
+		SmartDashboard.putData("Piston open", new RetractPiston(Robot.claw));
+		SmartDashboard.putData("Piston close", new ExtendPiston(Robot.claw));
 	
 		SmartDashboard.putData("ResetArmEncoder", new ResetArmEncoder());
 		
@@ -142,6 +147,6 @@ public class OI {
 	
 	public void reportToSmartDashboard() {
 //		SmartDashboard.putNumber("Left Stick Y", getLeftY());
-//		SmartDashboard.putNumber("Right Stick Y", getRightY());
+//		SmartDashboard.putNumber("Left Stick Y", getRightY());
 	}
 }

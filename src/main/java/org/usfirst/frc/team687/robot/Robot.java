@@ -8,6 +8,7 @@
 package org.usfirst.frc.team687.robot;
 
 import com.nerdherd.lib.motor.SingleMotorTalonSRX;
+import com.nerdherd.lib.pneumatics.Piston;
 
 import org.usfirst.frc.team687.robot.subsystems.Arm;
 import org.usfirst.frc.team687.robot.subsystems.Drive;
@@ -28,9 +29,10 @@ public class Robot extends TimedRobot {
 	public static PowerDistributionPanel pdp;
 	public static Drive drive;
 	public static Arm arm;
-	public static SingleMotorTalonSRX littleIntakeWheel, bigIntakeWheel;
+	public static SingleMotorTalonSRX leftIntakeWheel, rightIntakeWheel;
 	public static OI oi;
 	public static final String kDate = "2019_01_12_";
+	public static Piston claw;
 
 
 	/**
@@ -42,8 +44,9 @@ public class Robot extends TimedRobot {
 		pdp = new PowerDistributionPanel();
 		arm = new Arm();
 		drive = new Drive();
-		littleIntakeWheel = new SingleMotorTalonSRX(RobotMap.kLittleIntakeWheelID, "Lower Intake Wheel");
-		bigIntakeWheel = new SingleMotorTalonSRX(RobotMap.kBigIntakeWheelID, "Upper Intake Wheel");
+		leftIntakeWheel = new SingleMotorTalonSRX(RobotMap.kLeftIntakeWheelID, "Left Intake Wheel");
+		rightIntakeWheel = new SingleMotorTalonSRX(RobotMap.kRightIntakeWheelID, "Right Intake Wheel");
+		claw = new Piston(0, 1);
 		oi = new OI();
 
 	}
@@ -71,8 +74,8 @@ public class Robot extends TimedRobot {
 		Robot.drive.reportToSmartDashboard();
 		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
-		Robot.bigIntakeWheel.reportToSmartDashboard();
-		Robot.littleIntakeWheel.reportToSmartDashboard();
+		Robot.rightIntakeWheel.reportToSmartDashboard();
+		Robot.leftIntakeWheel.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 	}
 
@@ -112,8 +115,8 @@ public class Robot extends TimedRobot {
 		Robot.drive.reportToSmartDashboard();
 		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
-		Robot.bigIntakeWheel.reportToSmartDashboard();
-		Robot.littleIntakeWheel.reportToSmartDashboard();
+		Robot.rightIntakeWheel.reportToSmartDashboard();
+		Robot.leftIntakeWheel.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 		Robot.drive.logToCSV();
 		Robot.arm.logToCSV();
