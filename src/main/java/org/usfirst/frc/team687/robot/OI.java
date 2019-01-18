@@ -78,28 +78,30 @@ public class OI {
 		SmartDashboard.putData("Arm 0 degrees", new ArmSetAngle(0));
 		SmartDashboard.putData("Arm 10 degrees", new ArmSetAngle(10));
 		SmartDashboard.putData("Arm 45 degrees", new ArmSetAngle(45));
+		SmartDashboard.putData("Arm 20 degrees", new ArmSetAngle(20));
+		SmartDashboard.putData("Arm 30 degrees", new ArmSetAngle(15));
 		SmartDashboard.putData("Arm Up pos", new ArmSetPosition(ArmConstants.kArmUpPos));
 		SmartDashboard.putData("Stop both rollers", new StopBothRollers());
 		
-		SmartDashboard.putData("Left Intake -12V" , new SetMotorPower(Robot.leftIntakeWheel, -1));
-		SmartDashboard.putData("Left Intake -9V" , new SetMotorPower(Robot.leftIntakeWheel, -0.75));
-		SmartDashboard.putData("Left Intake -6V" , new SetMotorPower(Robot.leftIntakeWheel, -0.5));
+		// SmartDashboard.putData("Left Intake -12V" , new SetMotorPower(Robot.leftIntakeWheel, -1));
+		// SmartDashboard.putData("Left Intake -9V" , new SetMotorPower(Robot.leftIntakeWheel, -0.75));
+		// SmartDashboard.putData("Left Intake -6V" , new SetMotorPower(Robot.leftIntakeWheel, -0.5));
 		SmartDashboard.putData("Left Intake -3V" , new SetMotorPower(Robot.leftIntakeWheel, -0.25));
 		SmartDashboard.putData("Left Intake 0V" , new SetMotorPower(Robot.leftIntakeWheel, 0));
 		SmartDashboard.putData("Left Intake 3V" , new SetMotorPower(Robot.leftIntakeWheel, 0.25));
-		SmartDashboard.putData("Left Intake 6V" , new SetMotorPower(Robot.leftIntakeWheel, 0.5));
-		SmartDashboard.putData("Left Intake 9V" , new SetMotorPower(Robot.leftIntakeWheel, 0.75));
-		SmartDashboard.putData("Left Intake 12V" , new SetMotorPower(Robot.leftIntakeWheel, 1));
+		// SmartDashboard.putData("Left Intake 6V" , new SetMotorPower(Robot.leftIntakeWheel, 0.5));
+		// SmartDashboard.putData("Left Intake 9V" , new SetMotorPower(Robot.leftIntakeWheel, 0.75));
+		// SmartDashboard.putData("Left Intake 12V" , new SetMotorPower(Robot.leftIntakeWheel, 1));
 
-		SmartDashboard.putData("Right Intake -12V" , new SetMotorPower(Robot.rightIntakeWheel, -1));
-		SmartDashboard.putData("Right Intake -9V" , new SetMotorPower(Robot.rightIntakeWheel, -0.75));
-		SmartDashboard.putData("Right Intake -6V" , new SetMotorPower(Robot.rightIntakeWheel, -0.5));
+		// SmartDashboard.putData("Right Intake -12V" , new SetMotorPower(Robot.rightIntakeWheel, -1));
+		// SmartDashboard.putData("Right Intake -9V" , new SetMotorPower(Robot.rightIntakeWheel, -0.75));
+		// SmartDashboard.putData("Right Intake -6V" , new SetMotorPower(Robot.rightIntakeWheel, -0.5));
 		SmartDashboard.putData("Right Intake -3V" , new SetMotorPower(Robot.rightIntakeWheel, -0.25));
 		SmartDashboard.putData("Right Intake 0V" , new SetMotorPower(Robot.rightIntakeWheel, 0));
 		SmartDashboard.putData("Right Intake 3V" , new SetMotorPower(Robot.rightIntakeWheel, 0.25));
-		SmartDashboard.putData("Right Intake 6V" , new SetMotorPower(Robot.rightIntakeWheel, 0.5));
-		SmartDashboard.putData("Right Intake 9V" , new SetMotorPower(Robot.rightIntakeWheel, 0.75));
-		SmartDashboard.putData("Right Intake 12V" , new SetMotorPower(Robot.rightIntakeWheel, 1));
+		// SmartDashboard.putData("Right Intake 6V" , new SetMotorPower(Robot.rightIntakeWheel, 0.5));
+		// SmartDashboard.putData("Right Intake 9V" , new SetMotorPower(Robot.rightIntakeWheel, 0.75));
+		// SmartDashboard.putData("Right Intake 12V" , new SetMotorPower(Robot.rightIntakeWheel, 1));
 
 		SmartDashboard.putData("Piston open", new RetractPiston(Robot.claw));
 		SmartDashboard.putData("Piston close", new ExtendPiston(Robot.claw));

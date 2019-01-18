@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
 		drive = new Drive();
 		leftIntakeWheel = new SingleMotorTalonSRX(RobotMap.kLeftIntakeWheelID, "Left Intake Wheel");
 		rightIntakeWheel = new SingleMotorTalonSRX(RobotMap.kRightIntakeWheelID, "Right Intake Wheel");
+		rightIntakeWheel.setInversion(true);
 		claw = new Piston(0, 1);
 		oi = new OI();
 
