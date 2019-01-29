@@ -62,19 +62,18 @@ public class DriveConstants {
 	// public static final double kRightVelocityD = 0.00015;
 
 	// new gains for pf
-	public static final double kLeftStatic = 0;
-	public static final double kLeftV = 0.06171463;
-	public static final double kLeftVelocityP = 0.01;
-	public static final double kLeftVelocityD = 0.001;
+	public static final double kLeftStatic = 1.479/12;
+	public static final double kLeftV = 0.0301463;
+	public static final double kLeftVelocityP = 0.0001;
+	public static final double kLeftVelocityD = 0;
 
 
-	public static final double kRightStatic = 0;
-	public static final double kRightV = 0.06171463;
-	public static final double kRightVelocityP = 0.01;
-	public static final double kRightVelocityD = 0.001;
+	public static final double kRightStatic = 1.495/12;
+	public static final double kRightV = 0.0301463;
+	public static final double kRightVelocityP = 0.0001;
+	public static final double kRightVelocityD = 0;
 
-	// public static final double kRotP = 0;
-	public static final double kRotP = 0.008;
+	public static final double kRotP = 0;
 	
 	public static final double kTicksPerFoot = 16800;
 

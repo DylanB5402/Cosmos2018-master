@@ -7,15 +7,23 @@
 
 package org.usfirst.frc.team687.robot;
 
-import org.usfirst.frc.team687.robot.commands.drive.ResetDriveEncoders;
+import com.nerdherd.lib.motor.commands.SetMotorPower;
+import com.nerdherd.lib.pneumatics.commands.ExtendPiston;
+import com.nerdherd.lib.pneumatics.commands.RetractPiston;
+
+import org.usfirst.frc.team687.robot.commands.arm.ArmSetAngle;
+import org.usfirst.frc.team687.robot.commands.arm.ArmSetPosition;
+import org.usfirst.frc.team687.robot.commands.arm.ResetArmEncoder;
+import org.usfirst.frc.team687.robot.commands.arm.SetArmPower;
 import org.usfirst.frc.team687.robot.commands.drive.ResetGyro;
 import org.usfirst.frc.team687.robot.commands.drive.auto.DriveOpenLoop;
-import org.usfirst.frc.team687.robot.commands.drive.auto.DriveTrajectory;
-// import org.usfirst.frc.team687.robot.commands.drive.auto.DrivePurePursuit;
-import org.usfirst.frc.team687.robot.commands.drive.characterization.DriveCharacterizationTest;
-import org.usfirst.frc.team687.robot.commands.drive.characterization.VelocityTest;
-import org.usfirst.frc.team687.robot.constants.AutoConstants;
+import org.usfirst.frc.team687.robot.commands.intake_wheel.SetBigIntakePower;
+import org.usfirst.frc.team687.robot.commands.intake_wheel.SetLittleIntakePower;
+import org.usfirst.frc.team687.robot.commands.intake_wheel.StopBothRollers;
+import org.usfirst.frc.team687.robot.constants.ArmConstants;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -27,25 +35,88 @@ public class OI {
 	
 	public Joystick leftStick;
 	public Joystick rightStick;
+	public Joystick armStick;
 	private SendableChooser directionChooser;
+	public JoystickButton intakeTop_1, intakeBottom_2, stopBothIntakes_3, outtakeTop_4, outtakeBottom_5;
+	public JoystickButton downPos_8, upPos_7, horizontalPos_9 ;
 
 	public OI() {
 		leftStick = new Joystick(0);
 		rightStick = new Joystick(1);
+		armStick = new Joystick(2);
+
+		intakeTop_1 = new JoystickButton(armStick, 1);
+		intakeBottom_2 = new JoystickButton(armStick, 2);
+		stopBothIntakes_3 = new JoystickButton(armStick, 3);
+		outtakeTop_4 = new JoystickButton(armStick, 4);
+		outtakeBottom_5 = new JoystickButton(armStick, 5);
+		upPos_7 = new JoystickButton(armStick, 7);
+		downPos_8 = new JoystickButton(armStick, 8);
+		horizontalPos_9 = new JoystickButton(armStick, 9);
+
+		intakeTop_1.whenPressed(new SetBigIntakePower(-0.25));
+		intakeBottom_2.whenPressed(new SetLittleIntakePower(-0.25));
+		stopBothIntakes_3.whenPressed(new StopBothRollers());
+		outtakeTop_4.whenPressed(new SetBigIntakePower(0.25));
+		outtakeBottom_5.whenPressed(new SetLittleIntakePower(0.25));
+		upPos_7.whenPressed(new ArmSetAngle(45));
+		downPos_8.whenPressed(new ArmSetAngle(5));
+		horizontalPos_9.whenPressed(new ArmSetAngle(0));
+
 		SmartDashboard.putData("Reset Gyro", new ResetGyro());
-		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncoders());
-		SmartDashboard.putData("Drive Characterization Test", new DriveCharacterizationTest(0.5));
-		SmartDashboard.putData("Velocity Test", new VelocityTest(7000, 6));
+
+		SmartDashboard.putData("Arm -12V" , new SetArmPower(-1));
+		SmartDashboard.putData("Arm -9V" , new SetArmPower(-0.75));
+		SmartDashboard.putData("Arm -6V" , new SetArmPower(-0.5));
+		SmartDashboard.putData("Arm -3V" , new SetArmPower(-0.25));
+		SmartDashboard.putData("Arm 0V" , new SetArmPower(0));
+		SmartDashboard.putData("Arm 3V" , new SetArmPower(0.25));
+		SmartDashboard.putData("Arm 6V" , new SetArmPower(0.5));
+		SmartDashboard.putData("Arm 9V" , new SetArmPower(0.75));
+		SmartDashboard.putData("Arm 1V" , new SetArmPower(1));
+
+		SmartDashboard.putData("Arm 0 degrees", new ArmSetAngle(0));
+		SmartDashboard.putData("Arm 10 degrees", new ArmSetAngle(10));
+		SmartDashboard.putData("Arm 45 degrees", new ArmSetAngle(45));
+		SmartDashboard.putData("Arm 20 degrees", new ArmSetAngle(20));
+		SmartDashboard.putData("Arm 30 degrees", new ArmSetAngle(15));
+		SmartDashboard.putData("Arm Up pos", new ArmSetPosition(ArmConstants.kArmUpPos));
+		SmartDashboard.putData("Stop both rollers", new StopBothRollers());
+		
+		// SmartDashboard.putData("Left Intake -12V" , new SetMotorPower(Robot.leftIntakeWheel, -1));
+		// SmartDashboard.putData("Left Intake -9V" , new SetMotorPower(Robot.leftIntakeWheel, -0.75));
+		// SmartDashboard.putData("Left Intake -6V" , new SetMotorPower(Robot.leftIntakeWheel, -0.5));
+		SmartDashboard.putData("Left Intake -3V" , new SetMotorPower(Robot.leftIntakeWheel, -0.25));
+		SmartDashboard.putData("Left Intake 0V" , new SetMotorPower(Robot.leftIntakeWheel, 0));
+		SmartDashboard.putData("Left Intake 3V" , new SetMotorPower(Robot.leftIntakeWheel, 0.25));
+		// SmartDashboard.putData("Left Intake 6V" , new SetMotorPower(Robot.leftIntakeWheel, 0.5));
+		// SmartDashboard.putData("Left Intake 9V" , new SetMotorPower(Robot.leftIntakeWheel, 0.75));
+		// SmartDashboard.putData("Left Intake 12V" , new SetMotorPower(Robot.leftIntakeWheel, 1));
+
+		// SmartDashboard.putData("Right Intake -12V" , new SetMotorPower(Robot.rightIntakeWheel, -1));
+		// SmartDashboard.putData("Right Intake -9V" , new SetMotorPower(Robot.rightIntakeWheel, -0.75));
+		// SmartDashboard.putData("Right Intake -6V" , new SetMotorPower(Robot.rightIntakeWheel, -0.5));
+		SmartDashboard.putData("Right Intake -3V" , new SetMotorPower(Robot.rightIntakeWheel, -0.25));
+		SmartDashboard.putData("Right Intake 0V" , new SetMotorPower(Robot.rightIntakeWheel, 0));
+		SmartDashboard.putData("Right Intake 3V" , new SetMotorPower(Robot.rightIntakeWheel, 0.25));
+		// SmartDashboard.putData("Right Intake 6V" , new SetMotorPower(Robot.rightIntakeWheel, 0.5));
+		// SmartDashboard.putData("Right Intake 9V" , new SetMotorPower(Robot.rightIntakeWheel, 0.75));
+		// SmartDashboard.putData("Right Intake 12V" , new SetMotorPower(Robot.rightIntakeWheel, 1));
+
+		SmartDashboard.putData("Piston open", new RetractPiston(Robot.claw));
+		SmartDashboard.putData("Piston close", new ExtendPiston(Robot.claw));
+	
+		SmartDashboard.putData("ResetArmEncoder", new ResetArmEncoder());
+		
 
 		directionChooser = new SendableChooser<>();
 		// directionChooser.addObject("Forward", "Forward");
 		// directionChooser.addObject("Backwards", "Backwards");
 		SmartDashboard.putData("Direction Chooser", directionChooser);
 		SmartDashboard.putData("Open loop", new DriveOpenLoop());
-		// SmartDashboard.putData("Pure pursuit Test", new DrivePurePursuit(AutoConstants.test, 1.5, true));
+		// SmartDashboard.putData("Pure pursit Test", new DrivePurePursuit(AutoConstants.test, 1.5, true));
 		// SmartDashboard.putString("Direction", getStartingDirection());
-		SmartDashboard.putData("Pf Test", new DriveTrajectory("right_to_right_switch_back"));
-
+		// SmartDashboard.putData("Pf Test", new DriveTrajectory("right_to_right_switch_back"));
 	}
 	
 	public String getStartingDirection() {
@@ -68,12 +139,16 @@ public class OI {
 		return rightStick.getX();
 	}
 	
+	public double getArmY() {
+		return armStick.getY();
+	}
+
 	public boolean isLeftTriggerPulled() {
 		return leftStick.getRawButton(1);
 	}
 	
 	public void reportToSmartDashboard() {
 //		SmartDashboard.putNumber("Left Stick Y", getLeftY());
-//		SmartDashboard.putNumber("Right Stick Y", getRightY());
+//		SmartDashboard.putNumber("Left Stick Y", getRightY());
 	}
 }

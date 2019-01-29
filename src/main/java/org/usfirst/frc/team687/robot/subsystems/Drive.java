@@ -6,18 +6,17 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.usfirst.frc.team687.robot.Robot;
-import org.usfirst.frc.team687.robot.RobotMap;
-import org.usfirst.frc.team687.robot.commands.drive.teleop.ArcadeDrive;
-import org.usfirst.frc.team687.robot.commands.drive.teleop.TankDrive;
-import org.usfirst.frc.team687.robot.commands.drive.teleop.ClosedLoopTankDrive;
-import org.usfirst.frc.team687.robot.constants.DriveConstants;
-import org.usfirst.frc.team687.robot.utilities.NerdyTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
+
+import org.usfirst.frc.team687.robot.Robot;
+import org.usfirst.frc.team687.robot.RobotMap;
 import org.usfirst.frc.team687.robot.commands.drive.characterization.VelocityPIDF;
+import org.usfirst.frc.team687.robot.commands.drive.teleop.ArcadeDrive;
+import org.usfirst.frc.team687.robot.constants.DriveConstants;
+import org.usfirst.frc.team687.robot.utilities.NerdyTalon;
 
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.SPI;
@@ -34,10 +33,10 @@ public class Drive extends Subsystem {
 	private final NerdyTalon m_leftMaster, m_leftSlave1, m_leftSlave2;
 	private final NerdyTalon m_rightMaster, m_rightSlave1, m_rightSlave2;
 	private final AHRS m_nav;
-	
+
 	private double m_previousDistance, m_currentX, m_currentY, m_angleOffset, m_xOffset, m_yOffset;
-    
-    private String m_filePath1 = "/media/sda1/logs/";
+
+	private String m_filePath1 = "/media/sda1/logs/";
 	private String m_filePath2 = "/home/lvuser/logs/";
 	private String m_fileName = "2018_09_15_pathfinder_test";
     private File m_file;
@@ -102,8 +101,11 @@ public class Drive extends Subsystem {
 		m_leftSlave1.configDefaultSettings();
 		m_leftSlave2.configDefaultSettings();
 
-		m_rightMaster.configPIDF(DriveConstants.kRightVelocityP, 0, DriveConstants.kRightVelocityD, DriveConstants.kRightV, 0);
-		m_leftMaster.configPIDF(DriveConstants.kLeftVelocityP, 0, DriveConstants.kLeftVelocityD, DriveConstants.kLeftV, 0);
+		m_leftMaster.configLinearUnits(DriveConstants.kTicksPerFoot);
+		m_rightMaster.configLinearUnits(DriveConstants.kTicksPerFoot);
+		
+		m_velocityPIDF = new VelocityPIDF();
+		m_velocityNotifier = new Notifier(m_velocityPIDF);
 	}
 	
 	public void setPower(double leftPower, double rightPower) {
@@ -135,7 +137,6 @@ public class Drive extends Subsystem {
 	public void setVelocity(double leftVel, double rightVel) {
 		m_rightMaster.set(ControlMode.Velocity, rightVel);
 		m_leftMaster.set(ControlMode.Velocity, leftVel);
-		
 	}
 	
 	public void resetEncoders() {
@@ -228,37 +229,41 @@ public class Drive extends Subsystem {
     }
 	
 	public double ticksToFeet(double ticks) {
-		return ticks / DriveConstants.kTicksPerFoot;
+		return m_leftMaster.ticksToFeet(ticks);
 	}
 	
 	public double feetToTicks(double feet) {
-		return feet * DriveConstants.kTicksPerFoot;
+		return m_leftMaster.feetToTicks(feet);
 	}
 
 	public double getLeftVelocityFeet() {
-		return ticksToFeet(m_leftMaster.getSelectedSensorVelocity(0) / 0.1);
+		return m_leftMaster.getLinearVelocity();
 	}
 
 	public double getRightVelocityFeet() {
-		return ticksToFeet(m_rightMaster.getSelectedSensorVelocity(0) / 0.1);
+		return m_rightMaster.getLinearVelocity();
 	}
 
 	public double getLeftPositionFeet() {
-		return ticksToFeet(m_leftMaster.getSelectedSensorPosition(0));
+		return m_leftMaster.getEncoderPositionFeet();
 	}
 
 	public double getRightPositionFeet() {
-		return m_rightMaster.getSelectedSensorPosition(0) / DriveConstants.kTicksPerFoot;
+		return m_rightMaster.getEncoderPositionFeet();
 	}
 
-	public double fpsToTalonVelocityUnits(double fps) {
-		return feetToTicks(fps)/10;
+	public void startVelocityController() {
+		m_velocityNotifier.startPeriodic(DriveConstants.kVelocityPIDPeriod);
 	}
 
-	public void setVelocityFPS(double leftVel, double rightVel) {
-		setVelocity(fpsToTalonVelocityUnits(leftVel), fpsToTalonVelocityUnits(rightVel));
+	public void setTargetVelocities(double left, double right) {
+		m_velocityPIDF.setVelocity(left, right);
 	}
 
+	public void stopVelocityPIDF() {
+		m_velocityPIDF.stop();
+		m_velocityNotifier.stop();
+	}
 
     public void reportToSmartDashboard() {
     	SmartDashboard.putNumber("Left Master Voltage", getLeftOutputVoltage());

@@ -7,24 +7,21 @@
 
 package org.usfirst.frc.team687.robot;
 
-import edu.wpi.first.wpilibj.Notifier;
+import com.nerdherd.lib.motor.SingleMotorTalonSRX;
+import com.nerdherd.lib.pneumatics.Piston;
+
+import org.usfirst.frc.team687.robot.subsystems.Arm;
+import org.usfirst.frc.team687.robot.subsystems.Drive;
+
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team687.robot.commands.drive.characterization.VelocityPIDF;
-import org.usfirst.frc.team687.robot.constants.DriveConstants;
-import org.usfirst.frc.team687.robot.subsystems.Arm;
-import org.usfirst.frc.team687.robot.subsystems.Claw;
-import org.usfirst.frc.team687.robot.subsystems.Drive;
 
 /**
  * 
- * @author dbarv
- * Code heavily based on Tedklin's, 90% is based on stuff I've learned from him
+ * @author dbarv Code heavily based on Tedklin's, 90% is based on stuff I've
+ *         learned from him
  *
  */
 
@@ -32,8 +29,10 @@ public class Robot extends TimedRobot {
 	public static PowerDistributionPanel pdp;
 	public static Drive drive;
 	public static Arm arm;
-	public static Claw claw;
+	public static SingleMotorTalonSRX leftIntakeWheel, rightIntakeWheel;
 	public static OI oi;
+	public static final String kDate = "2019_01_12_";
+	public static Piston claw;
 
 
 	/**
@@ -45,8 +44,12 @@ public class Robot extends TimedRobot {
 		pdp = new PowerDistributionPanel();
 		arm = new Arm();
 		drive = new Drive();
-		claw = new Claw();
+		leftIntakeWheel = new SingleMotorTalonSRX(RobotMap.kLeftIntakeWheelID, "Left Intake Wheel");
+		rightIntakeWheel = new SingleMotorTalonSRX(RobotMap.kRightIntakeWheelID, "Right Intake Wheel");
+		rightIntakeWheel.setInversion(true);
+		claw = new Piston(0, 1);
 		oi = new OI();
+
 	}
 
 	/**
@@ -58,9 +61,11 @@ public class Robot extends TimedRobot {
 	public void disabledInit() {
 		Robot.drive.calcXY();
 		Robot.drive.reportToSmartDashboard();
+		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 		Robot.drive.stopLog();
+		Robot.arm.stopLog();
 	}
 
 	@Override
@@ -68,7 +73,10 @@ public class Robot extends TimedRobot {
 		Robot.drive.calcXY();
 		Scheduler.getInstance().run();
 		Robot.drive.reportToSmartDashboard();
+		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
+		Robot.rightIntakeWheel.reportToSmartDashboard();
+		Robot.leftIntakeWheel.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 	}
 
@@ -90,10 +98,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		Robot.drive.reportToSmartDashboard();
+		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
 		Robot.drive.calcXY();
 		SmartDashboard.putData(pdp);
 		Robot.drive.startLog();
+		Robot.arm.startLog();
 	}
 
 	/**
@@ -104,9 +114,13 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		Robot.drive.calcXY();
 		Robot.drive.reportToSmartDashboard();
+		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
+		Robot.rightIntakeWheel.reportToSmartDashboard();
+		Robot.leftIntakeWheel.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 		Robot.drive.logToCSV();
+		Robot.arm.logToCSV();
 
 	}
 
@@ -117,6 +131,7 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 		Robot.drive.calcXY();
 		Robot.drive.reportToSmartDashboard();
+		Robot.arm.reportState();
 		Robot.oi.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 
