@@ -15,13 +15,13 @@ package org.usfirst.frc.team687.robot;
  */
 public class RobotMap {
 	
-	public static final int kLeftMasterTalonSRXID = 1;
-	public static final int kLeftSlaveTalonSRX1ID = 2;
-	public static final int kLeftSlaveTalonSRX2ID = 3;
+	public static final int kLeftMasterTalonID = 1;
+	public static final int kLeftSlaveTalon1ID = 2;
+	public static final int kLeftSlaveTalon2ID = 3;
 	
-	public static final int kRightMasterTalonSRXID = 4;
-	public static final int kRightSlaveTalonSRX1ID = 5;
-	public static final int kRightSlaveTalonSRX2ID = 6;
+	public static final int kRightMasterTalonID = 4;
+	public static final int kRightSlaveTalon1ID = 5;
+	public static final int kRightSlaveTalon2ID = 6;
 
 	public static final int kArmID = 14;
 	public static final int kRightIntakeWheelID = 21;

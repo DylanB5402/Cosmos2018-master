@@ -7,8 +7,8 @@
 
 package org.usfirst.frc.team687.robot;
 
-import com.nerdherd.lib.motor.SingleMotorTalonSRX;
-import com.nerdherd.lib.pneumatics.Piston;
+import com.nerdherd.lib.misc.AutoChooser;
+import com.nerdherd.lib.sensor.UltrasonicSensor;
 
 import org.usfirst.frc.team687.robot.subsystems.Arm;
 import org.usfirst.frc.team687.robot.subsystems.Drive;
@@ -19,20 +19,18 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * 
- * @author dbarv Code heavily based on Tedklin's, 90% is based on stuff I've
- *         learned from him
  *
  */
 
 public class Robot extends TimedRobot {
 	public static PowerDistributionPanel pdp;
-	public static Drive drive;
 	public static Arm arm;
-	public static SingleMotorTalonSRX leftIntakeWheel, rightIntakeWheel;
 	public static OI oi;
 	public static final String kDate = "2019_01_12_";
-	public static Piston claw;
+	public static AutoChooser chooser;
+	public static Drive drive;
+	public static UltrasonicSensor ultrasonic;
+
 
 
 	/**
@@ -43,12 +41,12 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		pdp = new PowerDistributionPanel();
 		arm = new Arm();
+		chooser = new AutoChooser();
 		drive = new Drive();
-		leftIntakeWheel = new SingleMotorTalonSRX(RobotMap.kLeftIntakeWheelID, "Left Intake Wheel");
-		rightIntakeWheel = new SingleMotorTalonSRX(RobotMap.kRightIntakeWheelID, "Right Intake Wheel");
-		rightIntakeWheel.setInversion(true);
-		claw = new Piston(0, 1);
+		ultrasonic = new UltrasonicSensor(0);
 		oi = new OI();
+		
+		
 
 	}
 
@@ -59,31 +57,21 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		Robot.drive.calcXY();
-		Robot.drive.reportToSmartDashboard();
 		Robot.arm.reportState();
-		Robot.oi.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
-		Robot.drive.stopLog();
 		Robot.arm.stopLog();
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		Robot.drive.calcXY();
 		Scheduler.getInstance().run();
-		Robot.drive.reportToSmartDashboard();
 		Robot.arm.reportState();
-		Robot.oi.reportToSmartDashboard();
-		Robot.rightIntakeWheel.reportToSmartDashboard();
-		Robot.leftIntakeWheel.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 	}
 
 	
 	@Override
 	public void autonomousInit() {
-		Robot.drive.calcXY();	
 	}
 
 	/**
@@ -92,17 +80,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		Robot.drive.calcXY();
 	}
 
 	@Override
 	public void teleopInit() {
-		Robot.drive.reportToSmartDashboard();
 		Robot.arm.reportState();
-		Robot.oi.reportToSmartDashboard();
-		Robot.drive.calcXY();
 		SmartDashboard.putData(pdp);
-		Robot.drive.startLog();
 		Robot.arm.startLog();
 	}
 
@@ -112,14 +95,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		Robot.drive.calcXY();
-		Robot.drive.reportToSmartDashboard();
 		Robot.arm.reportState();
-		Robot.oi.reportToSmartDashboard();
-		Robot.rightIntakeWheel.reportToSmartDashboard();
-		Robot.leftIntakeWheel.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
-		Robot.drive.logToCSV();
 		Robot.arm.logToCSV();
 
 	}
@@ -129,10 +106,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		Robot.drive.calcXY();
-		Robot.drive.reportToSmartDashboard();
 		Robot.arm.reportState();
-		Robot.oi.reportToSmartDashboard();
 		SmartDashboard.putData(pdp);
 
 	}
