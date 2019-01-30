@@ -25,7 +25,7 @@ public class OpenLoopArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.arm.setPower(Robot.oi.getArmY());
+    // Robot.arm.setPower(Robot.oi.getArmY());
 
   }
 

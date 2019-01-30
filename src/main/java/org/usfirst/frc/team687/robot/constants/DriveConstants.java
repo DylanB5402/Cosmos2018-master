@@ -1,6 +1,5 @@
 package org.usfirst.frc.team687.robot.constants;
 
-import org.usfirst.frc.team687.robot.utilities.BezierCurve;
 
 public class DriveConstants {
 //	TalonSRX Constants
