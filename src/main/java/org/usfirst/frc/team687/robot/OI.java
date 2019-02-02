@@ -51,8 +51,9 @@ public class OI extends DefaultOI{
     100, 0. , 0., 10., 15., false);
     // ArrayList<TrajectoryPoint> straightLine = gen.generateTrajectory(Arrays.asList(new Pose2D(0, 0, 0).pose, new Pose2D(50, 0, 0).pose), 
     // 1000, 0. , 0., 5., 15., false);
-    SmartDashboard.putData("far right rocketo autoo", new DriveFalconTrajectory(Robot.drive, farRightRocket, 3, true, 0.15, 0));
-    SmartDashboard.putData("far right rocketo autoo twooo", new DriveFalconTrajectory(Robot.drive, farRightRocket2, 3, false, 0.15, 0));
+    // SmartDashboard.putData("far right rocketo autoo", new DriveFalconTrajectory(Robot.drive, farRightRocket, 3, true, 0.15, 0));
+    // SmartDashboard.putData("far right rocketo autoo twooo", new DriveFalconTrajectory(Robot.drive, farRightRocket2, 3, false, 0.15, 0));
     // SmartDashboard.putData("Straight Line", new DriveFalconTrajectory(Robot.drive, straightLine, 3, true, 0.15, 0));
+    SmartDashboard.putData("Open Loop 3 Volts", new OpenLoopDrive(Robot.drive, 0.5));
   }
 }
